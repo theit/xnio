@@ -76,7 +76,7 @@
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
+            <artifactId>osgi.core</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
@@ -142,6 +142,20 @@
                 </executions>
             </plugin>
             <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <!-- Define the annotation processor path. This is required on Java 22+. The other option is to
+                         pass the -proc:full javac argument. -->
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.jboss.logging</groupId>
+                            <artifactId>jboss-logging-processor</artifactId>
+                            <version>3.0.4.Final</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <excludes>
@@ -154,7 +168,6 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${version.surefire.plugin}</version>
                 <configuration>
                     <systemProperties>
                         <property>
@@ -181,7 +194,7 @@
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
-                    <additionalparam>-Xdoclint:none</additionalparam>
+                    <doclint>none</doclint>
                     <doctitle><![CDATA[XNIO API ]]>${project.version}</doctitle>
                     <header><![CDATA[XNIO API ]]>${project.version}</header>
                     <footer><![CDATA[XNIO API ]]>${project.version}</footer>
