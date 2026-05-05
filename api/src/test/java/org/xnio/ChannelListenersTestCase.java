@@ -19,12 +19,12 @@
 
 package org.xnio;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.xnio.AssertReadWrite.assertReadMessage;
 import static org.xnio.AssertReadWrite.assertWrittenMessage;
 
@@ -44,7 +44,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 import org.jmock.lib.concurrent.DeterministicExecutor;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xnio.channels.AcceptingChannel;
 import org.xnio.mock.AcceptingChannelMock;
 import org.xnio.mock.ConnectedStreamChannelMock;

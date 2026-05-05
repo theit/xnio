@@ -17,21 +17,21 @@
  */
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xnio.ChannelListener;
 import org.xnio.FutureResult;
 import org.xnio.IoFuture;
@@ -57,7 +57,7 @@ public class TcpChannelTestCase extends AbstractNioStreamChannelTest {
     protected ConnectedStreamChannel serverChannel = null;
     protected AcceptingChannel<? extends ConnectedStreamChannel> server;
 
-    @Before
+    @BeforeEach
     public void createServer() throws IOException {
         bindAddress = new InetSocketAddress(Inet4Address.getByAddress(new byte[] { 127, 0, 0, 1 }), 12345);
         final ChannelListener<AcceptingChannel<ConnectedStreamChannel>> acceptingChannelListener = new TestChannelListener<AcceptingChannel<ConnectedStreamChannel>>();;
@@ -66,7 +66,7 @@ public class TcpChannelTestCase extends AbstractNioStreamChannelTest {
         assertNotNull(server);
     }
 
-    @After
+    @AfterEach
     public void closeServer() throws IOException {
         if (server != null) {
             server.close();
@@ -102,7 +102,7 @@ public class TcpChannelTestCase extends AbstractNioStreamChannelTest {
     }
 
     @Test
-    @Ignore("unreliable")
+    @Disabled("unreliable")
     public void optionSetup() throws IOException {
         initChannels();
         final Option<?>[] unsupportedOptions = OptionHelper.getNotSupportedOptions(Options.CLOSE_ABORT,
@@ -110,9 +110,9 @@ public class TcpChannelTestCase extends AbstractNioStreamChannelTest {
                 Options.RECEIVE_BUFFER, Options.SEND_BUFFER, Options.TCP_NODELAY, Options.TCP_OOB_INLINE,
                 Options.WRITE_TIMEOUT);
         for (Option<?> option: unsupportedOptions) {
-            assertFalse("Channel supports " + option, channel.supportsOption(option));
-            assertNull("Expected null value for option " + option + " but got " + channel.getOption(option) + " instead",
-                    channel.getOption(option));
+            assertFalse(channel.supportsOption(option), "Channel supports " + option);
+            assertNull(channel.getOption(option),
+                    "Expected null value for option " + option + " but got " + channel.getOption(option) + " instead");
         }
 
         assertTrue(channel.supportsOption(Options.CLOSE_ABORT));
@@ -143,7 +143,7 @@ public class TcpChannelTestCase extends AbstractNioStreamChannelTest {
         channel.setOption(Options.TCP_NODELAY, true);
         channel.setOption(Options.TCP_OOB_INLINE, true);
         channel.setOption(Options.WRITE_TIMEOUT, 1301093);
-        assertNull("Unexpected option value: " + channel.getOption(Options.MAX_INBOUND_MESSAGE_SIZE), channel.setOption(Options.MAX_INBOUND_MESSAGE_SIZE, 50000));// unsupported
+        assertNull(channel.setOption(Options.MAX_INBOUND_MESSAGE_SIZE, 50000), "Unexpected option value: " + channel.getOption(Options.MAX_INBOUND_MESSAGE_SIZE));// unsupported
 
         assertTrue(channel.getOption(Options.CLOSE_ABORT));
         assertTrue(channel.getOption(Options.IP_TRAFFIC_CLASS) >= 0);// it is okay that 5 is not returned

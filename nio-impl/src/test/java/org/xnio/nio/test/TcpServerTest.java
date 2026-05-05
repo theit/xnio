@@ -17,11 +17,11 @@
  */
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -29,9 +29,9 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.xnio.LocalSocketAddress;
 import org.xnio.OptionMap;
 import org.xnio.Options;
@@ -60,7 +60,7 @@ public abstract class TcpServerTest {
     protected AcceptingChannel<? extends ConnectedStreamChannel> server;
 
     @SuppressWarnings("deprecation")
-    @BeforeClass
+    @BeforeAll
     public static void createWorker() throws IOException {
         int readThreads = (int) Math.round(Math.random() * 10);
         if (readThreads == 0) {
@@ -77,7 +77,7 @@ public abstract class TcpServerTest {
         bindAddress = new InetSocketAddress(Inet4Address.getByAddress(new byte[] { 127, 0, 0, 1 }), SERVER_PORT);
     }
 
-    @AfterClass
+    @AfterAll
     public static void destroyWorker() throws InterruptedException {
         worker.shutdown();
         worker.awaitTermination(1L, TimeUnit.MINUTES);
@@ -130,7 +130,7 @@ public abstract class TcpServerTest {
         return workerReadThreadsValue;
     }
 
-    @After
+    @AfterEach
     public void closeServer() throws IOException {
         if (server != null) {
             server.close();

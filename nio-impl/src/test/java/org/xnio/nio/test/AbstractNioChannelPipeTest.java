@@ -17,8 +17,8 @@
  */
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -32,9 +32,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jboss.logging.Logger;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.ChannelListener;
 import org.xnio.ChannelListeners;
 import org.xnio.ChannelPipe;
@@ -100,14 +100,14 @@ public abstract class AbstractNioChannelPipeTest<S extends StreamSourceChannel, 
         }
     }
 
-    @Before
+    @BeforeEach
     public void setupTest() {
         problems.clear();
         leftChannelOK = new AtomicBoolean(false);
         rightChannelOK = new AtomicBoolean(false);
     }
 
-    @After
+    @AfterEach
     public void checkProblems() {
         assertTrue(leftChannelOK.get());
         assertTrue(rightChannelOK.get());

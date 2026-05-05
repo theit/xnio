@@ -19,10 +19,10 @@
 
 package org.xnio.channels;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -31,9 +31,9 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.BufferAllocator;
 import org.xnio.Buffers;
 import org.xnio.ByteBufferSlicePool;
@@ -48,7 +48,7 @@ import org.xnio.mock.ConnectedStreamChannelMock;
 public class FramedMessageChannelTestCase {
     private ConnectedStreamChannelMock connectedChannel;
 
-    @Before
+    @BeforeEach
     public void init() {
         connectedChannel = new ConnectedStreamChannelMock();
     }
@@ -752,6 +752,6 @@ public class FramedMessageChannelTestCase {
         ByteBuffer written = connectedChannel.getWrittenBytes();
         written.flip();
         assertEquals(byteBuffer.limit(), written.limit());
-        Assert.assertArrayEquals(byteBuffer.array(), Arrays.copyOf(written.array(), totalLength));
+        Assertions.assertArrayEquals(byteBuffer.array(), Arrays.copyOf(written.array(), totalLength));
     }
 }

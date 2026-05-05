@@ -17,11 +17,11 @@
  */
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -29,8 +29,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xnio.Buffers;
 import org.xnio.LocalSocketAddress;
 import org.xnio.Option;
@@ -113,7 +113,7 @@ public class UdpChannelTestCase {
     }
 
     @Test
-    @Ignore("Does not follow thread model")
+    @Disabled("Does not follow thread model")
     public void testChannelWithOneThreadOnly() throws IllegalArgumentException, IOException {
         final XnioWorker xnioWorker1 = xnio.createWorker(OptionMap.create(Options.WORKER_IO_THREADS, 1));
         final XnioWorker xnioWorker2 = xnio.createWorker(OptionMap.create(Options.WORKER_IO_THREADS, 1));
@@ -477,9 +477,9 @@ public class UdpChannelTestCase {
                 Options.RECEIVE_BUFFER, Options.SEND_BUFFER, Options.IP_TRAFFIC_CLASS, Options.MULTICAST_TTL);
         try {
             for (Option<?> option: unsupportedOptions) {
-                assertFalse("Server supports " + option, server.supportsOption(option));
-                assertNull("Expected null value for option " + option + " but got " + server.getOption(option) + " instead",
-                        server.getOption(option));
+                assertFalse(server.supportsOption(option), "Server supports " + option);
+                assertNull(server.getOption(option),
+                        "Expected null value for option " + option + " but got " + server.getOption(option) + " instead");
             }
             assertTrue(server.supportsOption(Options.BROADCAST));
             assertFalse(server.getOption(Options.BROADCAST));

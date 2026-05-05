@@ -18,10 +18,10 @@
  */
 package org.xnio;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.channels.AcceptingChannel;
 import org.xnio.channels.ConnectedStreamChannel;
 import org.xnio.mock.XnioMock;
@@ -57,7 +57,7 @@ public class FileSystemWatcherTestCase {
         return XnioMock.getInstance();
     }
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
 
         rootDir = new File(System.getProperty("java.io.tmpdir") + DIR_NAME);
@@ -82,7 +82,7 @@ public class FileSystemWatcherTestCase {
         }
     }
 
-    @After
+    @AfterEach
     public void after() {
         deleteRecursive(rootDir);
     }
@@ -146,25 +146,25 @@ public class FileSystemWatcherTestCase {
     private void checkResult(File file, FileChangeEvent.Type type) throws InterruptedException {
         Collection<FileChangeEvent> results = this.results.poll(10, TimeUnit.SECONDS);
         Collection<FileChangeEvent> secondResults = this.secondResults.poll(10, TimeUnit.SECONDS);
-        Assert.assertNotNull(results);
-        Assert.assertEquals(1, results.size());
-        Assert.assertEquals(1, secondResults.size());
+        Assertions.assertNotNull(results);
+        Assertions.assertEquals(1, results.size());
+        Assertions.assertEquals(1, secondResults.size());
         FileChangeEvent res = results.iterator().next();
         FileChangeEvent res2 = secondResults.iterator().next();
         if (type == FileChangeEvent.Type.REMOVED && res.getType() == FileChangeEvent.Type.MODIFIED) {
             //sometime OS's will give a MODIFIED event before the REMOVED one
             results = this.results.poll(10, TimeUnit.SECONDS);
             secondResults = this.secondResults.poll(10, TimeUnit.SECONDS);
-            Assert.assertNotNull(results);
-            Assert.assertNotNull(secondResults);
-            Assert.assertEquals(1, results.size());
-            Assert.assertEquals(1, secondResults.size());
+            Assertions.assertNotNull(results);
+            Assertions.assertNotNull(secondResults);
+            Assertions.assertEquals(1, results.size());
+            Assertions.assertEquals(1, secondResults.size());
             res = results.iterator().next();
         }
-        Assert.assertEquals(file, res.getFile());
-        Assert.assertEquals(type, res.getType());
-        Assert.assertEquals(file, res2.getFile());
-        Assert.assertEquals(type, res2.getType());
+        Assertions.assertEquals(file, res.getFile());
+        Assertions.assertEquals(type, res.getType());
+        Assertions.assertEquals(file, res2.getFile());
+        Assertions.assertEquals(type, res2.getType());
     }
 
     public static void deleteRecursive(final File file) {

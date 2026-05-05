@@ -18,8 +18,8 @@
 
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -29,7 +29,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xnio.ChannelListener;
 import org.xnio.FutureResult;
 import org.xnio.IoFuture;
@@ -192,16 +192,16 @@ public class NioTcpConnectionTestCase extends AbstractNioTcpTest<StreamConnectio
                     clientOpened.set(true);
                 }
             }, null, OptionMap.EMPTY);
-            assertTrue("Read timed out", ioLatch.await(500L, TimeUnit.MILLISECONDS));
-            assertTrue("Close timed out", closeLatch.await(500L, TimeUnit.MILLISECONDS));
-            assertFalse("Client read too much", clientReadTooMuch.get());
-            assertTrue("Client read OK", clientReadOnceOK.get());
-            assertTrue("Client read done", clientReadDoneOK.get());
-            assertTrue("Client write OK", clientWriteOK.get());
-            assertFalse("Server read too much", serverReadTooMuch.get());
-            assertTrue("Server read OK", serverReadOnceOK.get());
-            assertTrue("Server read done", serverReadDoneOK.get());
-            assertTrue("Server write OK", serverWriteOK.get());
+            assertTrue(ioLatch.await(500L, TimeUnit.MILLISECONDS), "Read timed out");
+            assertTrue(closeLatch.await(500L, TimeUnit.MILLISECONDS), "Close timed out");
+            assertFalse(clientReadTooMuch.get(), "Client read too much");
+            assertTrue(clientReadOnceOK.get(), "Client read OK");
+            assertTrue(clientReadDoneOK.get(), "Client read done");
+            assertTrue(clientWriteOK.get(), "Client write OK");
+            assertFalse(serverReadTooMuch.get(), "Server read too much");
+            assertTrue(serverReadOnceOK.get(), "Server read OK");
+            assertTrue(serverReadDoneOK.get(), "Server read done");
+            assertTrue(serverWriteOK.get(), "Server write OK");
         } finally {
             worker.shutdown();
         }

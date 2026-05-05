@@ -19,18 +19,16 @@
 
 package org.xnio.racecondition;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 
 import org.jboss.byteman.contrib.bmunit.BMScript;
-import org.jboss.byteman.contrib.bmunit.BMUnitRunner;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xnio.channels.ConnectedSslStreamChannel;
 import org.xnio.ssl.AbstractConnectedSslStreamChannelTest;
 import org.xnio.ssl.mock.SSLEngineMock.HandshakeAction;
@@ -41,8 +39,8 @@ import org.xnio.ssl.mock.SSLEngineMock.HandshakeAction;
  * 
  * @author <a href="mailto:flavia.rainone@jboss.com">Flavia Rainone</a>
  */
-@Ignore
-@RunWith(BMUnitRunner.class)
+@Disabled
+// @RunWith(BMUnitRunner.class)
 @BMScript(dir="src/test/resources")
 public class CloseReadingSslChannelTestCase extends AbstractConnectedSslStreamChannelTest {
     @Test

@@ -18,7 +18,7 @@
 
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -27,11 +27,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jboss.logging.Logger;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xnio.ChannelListener;
 import org.xnio.ChannelPipe;
-import org.xnio.IoUtils;
-import org.xnio.Options;
 import org.xnio.XnioWorker;
 import org.xnio.channels.StreamChannel;
 

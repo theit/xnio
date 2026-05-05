@@ -19,11 +19,11 @@
 
 package org.xnio;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for {@link Property}.
@@ -79,8 +79,8 @@ public class PropertyTestCase {
             assertFalse(property.equals(new Object()));
             for (Property compareTo: properties) {
                 if (property != compareTo) {
-                    assertFalse(property.toString() + " is equal to " + compareTo, property.equals((Object)compareTo));
-                    assertFalse(property.toString() + " is equal to " + compareTo, property.equals(compareTo));
+                    assertFalse(property.equals((Object)compareTo), property.toString() + " is equal to " + compareTo);
+                    assertFalse(property.equals(compareTo), property.toString() + " is equal to " + compareTo);
                     // two calls to hashCode must return the same result
                     assertEquals(property.hashCode(), property.hashCode());
                     assertEquals(compareTo.hashCode(), compareTo.hashCode());

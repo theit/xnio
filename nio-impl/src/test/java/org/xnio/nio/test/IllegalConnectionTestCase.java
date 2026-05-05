@@ -17,7 +17,7 @@
  */
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -25,10 +25,10 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xnio.OptionMap;
 import org.xnio.Options;
 import org.xnio.StreamConnection;
@@ -49,21 +49,21 @@ public class IllegalConnectionTestCase {
     private static SocketAddress bindAddress;
     private static XnioWorker worker;
 
-    @BeforeClass
+    @BeforeAll
     public static void createWorker() throws IOException {
         final Xnio xnio = Xnio.getInstance("nio", IllegalConnectionTestCase.class.getClassLoader());
         worker = xnio.createWorker(OptionMap.create(Options.WORKER_WRITE_THREADS, 3, Options.WORKER_READ_THREADS, 4));
         bindAddress = new InetSocketAddress(Inet4Address.getByAddress(new byte[] { 127, 0, 0, 1 }), 12345);
     }
 
-    @AfterClass
+    @AfterAll
     public static void destroyWorker() throws InterruptedException {
         worker.shutdown();
         worker.awaitTermination(1L, TimeUnit.MINUTES);
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void illegalAcceptThreads() throws IOException {
         IllegalArgumentException expected;
 

@@ -19,8 +19,8 @@
 
 package org.xnio.conduits;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.mock.ConduitMock;
 import org.xnio.mock.MessageConduitMock;
 import org.xnio.mock.XnioIoThreadMock;
@@ -33,8 +33,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.wildfly.common.Assert.assertTrue;
 import static org.xnio.AssertReadWrite.assertReadMessage;
 import static org.xnio.AssertReadWrite.assertWrittenMessage;
@@ -50,7 +50,7 @@ public class ConduitsTestCase {
     private MessageConduitMock messageConduitMock;
 
 
-    @Before
+    @BeforeEach
     public void init() {
         final XnioWorkerMock worker = new XnioWorkerMock();
         final XnioIoThreadMock threadMock = worker.chooseThread();

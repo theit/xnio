@@ -19,8 +19,8 @@
 
 package org.xnio.ssl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOError;
 import java.io.IOException;
@@ -30,11 +30,11 @@ import javax.net.ssl.SSLSession;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.jmock.integration.junit4.JUnit4Mockery;
+import org.jmock.junit5.JUnit5Mockery;
 import org.jmock.lib.concurrent.Synchroniser;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.ByteBufferPool;
 import org.xnio.conduits.StreamSinkConduit;
 import org.xnio.conduits.StreamSourceConduit;
@@ -66,9 +66,9 @@ public class JsseSslStreamConnectionBufferOverflowTestCase {
     // the xnio IO thread
     protected XnioIoThreadMock threadMock;
 
-    @Before
+    @BeforeEach
     public void createChannelMock() throws IOException {
-        context = new JUnit4Mockery() {{
+        context = new JUnit5Mockery() {{
                     setThreadingPolicy(new Synchroniser());
                 }};
         engineMock = new SSLEngineMockSmallPacketSize(context);
@@ -89,7 +89,7 @@ public class JsseSslStreamConnectionBufferOverflowTestCase {
         this.sourceConduit = connection.getSourceChannel().getConduit();
     }
 
-    @After
+    @AfterEach
     public void closeIoThread() {
         threadMock.closeIoThread();
     }

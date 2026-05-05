@@ -19,10 +19,10 @@
 
 package org.xnio.channels;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.xnio.AssertReadWrite.assertReadMessage;
 
 import java.io.File;
@@ -32,8 +32,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.ByteBufferSlicePool;
 import org.xnio.ChannelListener;
 import org.xnio.OptionMap;
@@ -52,7 +52,7 @@ public class PushBackStreamChannelTestCase {
     private PushBackStreamChannel channel;
     private ConnectedStreamChannelMock firstChannel;
 
-    @Before
+    @BeforeEach
     public void init() {
         firstChannel = new ConnectedStreamChannelMock();
         firstChannel.enableRead(true);

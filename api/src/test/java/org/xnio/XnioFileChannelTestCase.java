@@ -19,8 +19,8 @@
 
 package org.xnio;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.xnio.AssertReadWrite.assertReadMessage;
 import static org.xnio.AssertReadWrite.assertWrittenMessage;
 
@@ -34,9 +34,9 @@ import java.nio.channels.FileChannel.MapMode;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.channels.BlockingByteChannel;
 import org.xnio.channels.PushBackStreamChannel;
 import org.xnio.mock.ConnectedStreamChannelMock;
@@ -52,7 +52,7 @@ public class XnioFileChannelTestCase {
     private RandomAccessFile randomAccessFile;
     private FileChannel fileChannel;
 
-    @Before
+    @BeforeEach
     public void initFileChannel() throws IOException {
         final File file = File.createTempFile("test", ".txt");
         file.deleteOnExit();
@@ -60,7 +60,7 @@ public class XnioFileChannelTestCase {
         fileChannel = new XnioFileChannel(randomAccessFile.getChannel());
     }
 
-    @After
+    @AfterEach
     public void closeFileChannel() throws IOException {
         fileChannel.close();
         randomAccessFile.close();

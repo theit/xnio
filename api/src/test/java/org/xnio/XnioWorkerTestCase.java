@@ -19,12 +19,12 @@
 
 package org.xnio;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -37,8 +37,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.channels.AcceptingChannel;
 import org.xnio.channels.AssembledConnectedMessageChannel;
 import org.xnio.channels.AssembledConnectedStreamChannel;
@@ -68,7 +68,7 @@ public class XnioWorkerTestCase {
     private static final SocketAddress unknownSocketAddress = new SocketAddress() {private static final long serialVersionUID = 1L;};
     private XnioWorker xnioWorker;
 
-    @Before
+    @BeforeEach
     public void init() throws IllegalArgumentException, IOException {
         final Xnio xnio = Xnio.getInstance();
         xnioWorker = xnio.createWorker(OptionMap.create(Options.WORKER_NAME, "worker for tests", Options.THREAD_DAEMON, true));

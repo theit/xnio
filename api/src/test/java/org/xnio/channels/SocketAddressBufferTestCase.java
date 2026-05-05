@@ -19,13 +19,13 @@
 
 package org.xnio.channels;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xnio.LocalSocketAddress;
 
 /**

@@ -19,12 +19,12 @@
 
 package org.xnio;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.xnio.AssertReadWrite.assertReadMessage;
 import static org.xnio.AssertReadWrite.assertWrittenMessage;
 
@@ -41,12 +41,12 @@ import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.Permission;
 import java.security.PrivilegedAction;
-import java.util.ServiceConfigurationError;
-
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.TrustManagerFactory;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledForJreRange;
+import org.junit.jupiter.api.condition.JRE;
 import org.xnio.channels.Channels;
 import org.xnio.mock.ConnectedStreamChannelMock;
 import org.xnio.ssl.XnioSsl;
@@ -104,6 +104,7 @@ public class XnioTestCase {
     }
 
     @Test
+    @EnabledForJreRange(max = JRE.JAVA_23)
     public void allowBlockingWithSecurity() {
         final SecurityManager securityManager = new SecurityManager();
         System.setSecurityManager(securityManager);
@@ -364,6 +365,7 @@ public class XnioTestCase {
     }
 
     @Test
+    @EnabledForJreRange(max = JRE.JAVA_23)
     public void propertiesRetrieval() {
         final Xnio xnio = Xnio.getInstance();
         assertNull(xnio.getProperty("xnio.test.prop"));
@@ -381,6 +383,7 @@ public class XnioTestCase {
     }
 
     @Test
+    @EnabledForJreRange(max = JRE.JAVA_23)
     public void illegalPropertiesRetrieval() {
         System.setSecurityManager(null);
         final Xnio xnio = Xnio.getInstance();

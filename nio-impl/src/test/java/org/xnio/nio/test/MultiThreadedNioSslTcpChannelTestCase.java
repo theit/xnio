@@ -17,7 +17,7 @@
  */
 package org.xnio.nio.test;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * Runs NioSslTcpChannelTestCase with 5 I/O threads.
@@ -27,7 +27,7 @@ import org.junit.Before;
  */
 public class MultiThreadedNioSslTcpChannelTestCase extends NioSslTcpChannelTestCase {
 
-    @Before
+    @BeforeEach
     public void setThreads() {
         super.setNumberOfThreads(5);
     }

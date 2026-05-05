@@ -19,12 +19,12 @@
 
 package org.xnio;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -39,7 +39,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 
 /**
@@ -254,8 +254,8 @@ public class ByteStringTestCase {
         do {
             for (ByteString compareTo: byteStrings) {
                 if (byteString != compareTo) {
-                    assertFalse(byteString.toString() + " is equal to " + compareTo, byteString.equals((Object)compareTo));
-                    assertFalse(byteString.toString() + " is equal to " + compareTo, byteString.equals(compareTo));
+                    assertFalse(byteString.equals((Object)compareTo), byteString.toString() + " is equal to " + compareTo);
+                    assertFalse(byteString.equals(compareTo), byteString.toString() + " is equal to " + compareTo);
                     // two calls to hashCode must return the same result
                     assertEquals(byteString.hashCode(), byteString.hashCode());
                     assertEquals(compareTo.hashCode(), compareTo.hashCode());

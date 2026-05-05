@@ -24,9 +24,9 @@ import java.net.Socket;
 import java.net.URL;
 import java.security.GeneralSecurityException;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.xnio.ChannelListener;
 import org.xnio.IoFuture;
 import org.xnio.OptionMap;
@@ -56,7 +56,7 @@ public class NioSslRandomlyTimedBufferExpansionTcpConnectionTestCase extends Abs
     private static final String DEFAULT_KEY_STORE = "keystore.jks";
     private static final String DEFAULT_KEY_STORE_PASSWORD = "jboss-remoting-test";
 
-    @Before
+    @BeforeEach
     public void initXnioSsl() throws GeneralSecurityException {
         xnioSsl = Xnio.getInstance("nio", NioSslTcpChannelTestCase.class.getClassLoader()).getSslProvider(OptionMap.EMPTY);
     }
@@ -81,7 +81,7 @@ public class NioSslRandomlyTimedBufferExpansionTcpConnectionTestCase extends Abs
         return server;
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setKeyStoreAndTrustStore() {
         final URL storePath = NioSslTcpChannelTestCase.class.getClassLoader().getResource(DEFAULT_KEY_STORE);
         if (System.getProperty(KEY_STORE_PROPERTY) == null) {
@@ -141,6 +141,6 @@ public class NioSslRandomlyTimedBufferExpansionTcpConnectionTestCase extends Abs
         connection.getSinkChannel().shutdownWrites();
     }
 
-    @Override @Ignore
+    @Override @Disabled
     public void serverClose() {}
 }

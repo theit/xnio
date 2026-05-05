@@ -17,7 +17,7 @@
  */
 package org.xnio.nio.test;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * Runs NioTcpConnectionTestCase with 3 I/O threads.
@@ -27,7 +27,7 @@ import org.junit.Before;
  */
 public class MultiThreadedNioTcpConnectionTestCase extends NioTcpConnectionTestCase {
 
-    @Before
+    @BeforeEach
     public void setThreads() {
         super.setNumberOfThreads(3);
     }

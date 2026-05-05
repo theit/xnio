@@ -19,15 +19,15 @@
 
 package org.xnio.ssl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.ssl.mock.SSLEngineMock;
 
 /**
@@ -38,7 +38,7 @@ import org.xnio.ssl.mock.SSLEngineMock;
  */
 public class SslStreamConnectionValidationTestCase extends AbstractSslConnectionTest {
 
-    @After @Override
+    @AfterEach @Override
     public void checkContext() {
         // do not check context... not all methods will be invoked on sessions created for invalid scenarios
     }

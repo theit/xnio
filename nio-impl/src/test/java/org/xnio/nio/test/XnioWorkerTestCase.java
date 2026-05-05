@@ -18,12 +18,12 @@
  */
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -34,9 +34,9 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.xnio.ChannelListener;
 import org.xnio.IoFuture;
 import org.xnio.LocalSocketAddress;
@@ -67,13 +67,13 @@ public class XnioWorkerTestCase {
 
     protected AcceptingChannel<? extends ConnectedStreamChannel> server;
 
-    @BeforeClass
+    @BeforeAll
     public static void createWorker() throws IOException {
         xnio = Xnio.getInstance("nio", XnioWorkerTestCase.class.getClassLoader());
         bindAddress = new InetSocketAddress(Inet4Address.getByAddress(new byte[] { 127, 0, 0, 1 }), SERVER_PORT);
     }
 
-    @AfterClass
+    @AfterAll
     public static void destroyWorker() throws InterruptedException {
         if (worker != null && !worker.isShutdown()) {
             worker.shutdown();
@@ -268,9 +268,9 @@ public class XnioWorkerTestCase {
             assertNotNull(expected);
             assertSame(IoFuture.Status.CANCELLED, connectedStreamChannel.getStatus());
 
-            assertFalse("listener is not supposed to have been invoked; is channel open: "  +
-                            (channelListener.getChannel() != null? channelListener.getChannel().isOpen(): " null channel"),
-                    channelListener.isInvokedYet());
+            assertFalse(channelListener.isInvokedYet(),
+                    "listener is not supposed to have been invoked; is channel open: "  +
+                            (channelListener.getChannel() != null? channelListener.getChannel().isOpen(): " null channel"));
 
             // make sure that the server is up and can accept more connections
             assertTrue(streamServer.isOpen());

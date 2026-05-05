@@ -18,8 +18,8 @@
 
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -29,8 +29,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.ChannelListener;
 import org.xnio.IoUtils;
 import org.xnio.OptionMap;
@@ -49,7 +49,7 @@ import org.xnio.ssl.SslConnection;
  */
 public class NioStartTLSTcpConnectionTestCase extends NioSslTcpConnectionTestCase {
 
-    @Before
+    @BeforeEach
     public void setStartTLSOption() {
         final OptionMap optionMap = OptionMap.create(Options.SSL_STARTTLS, true);
         super.setServerOptionMap(optionMap);

@@ -19,11 +19,10 @@
 
 package org.xnio.ssl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.xnio.ssl.mock.SSLEngineMock.CLOSE_MSG;
 import static org.xnio.ssl.mock.SSLEngineMock.HANDSHAKE_MSG;
 import static org.xnio.ssl.mock.SSLEngineMock.HandshakeAction.FINISH;
@@ -33,15 +32,12 @@ import static org.xnio.ssl.mock.SSLEngineMock.HandshakeAction.NEED_UNWRAP;
 import static org.xnio.ssl.mock.SSLEngineMock.HandshakeAction.NEED_WRAP;
 import static org.xnio.ssl.mock.SSLEngineMock.HandshakeAction.PERFORM_REQUESTED_ACTION;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import javax.net.ssl.SSLEngineResult.HandshakeStatus;
 
-import org.jmock.integration.junit4.JUnitRuleMockery;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xnio.ssl.mock.SSLEngineMock;
 
 
@@ -51,8 +47,6 @@ import org.xnio.ssl.mock.SSLEngineMock;
  * @author <a href="mailto:frainone@redhat.com">Flavia Rainone</a>
  */
 public class JsseSslStreamSinkConduitTestCase extends AbstractSslConnectionTest {
-    @Rule
-    public final JUnitRuleMockery context = new JUnitRuleMockery();
     @Test
     public void writeWithoutHandshake() throws IOException {
         // no handshake actions for engineMock this time, meaning that it will just wrap and unwrap without any handshake
@@ -357,7 +351,7 @@ public class JsseSslStreamSinkConduitTestCase extends AbstractSslConnectionTest 
         buffer.put("write this".getBytes("UTF-8")).flip();
         // attempt to write... conduit is expected to write all messages without any issues despite the constant handshaking action
         for (int i = 0; i < 10; i++) {
-            assertEquals("Failed at attempt to write number " + i, 10, sinkConduit.write(buffer));
+            assertEquals(10, sinkConduit.write(buffer), "Failed at attempt to write number " + i);
             assertFalse(buffer.hasRemaining());
             buffer.flip();
         }
@@ -395,7 +389,7 @@ public class JsseSslStreamSinkConduitTestCase extends AbstractSslConnectionTest 
         buffer.put("write this".getBytes("UTF-8")).flip();
         // attempt to write... conduit is expected to write all messages without any issues despite the constant handshaking action
         for (int i = 0; i < 10; i++) {
-            assertEquals("Failed at attempt to write number " + i, 10, sinkConduit.write(buffer));
+            assertEquals(10, sinkConduit.write(buffer), "Failed at attempt to write number " + i);
             assertFalse(buffer.hasRemaining());
             buffer.flip();
         }

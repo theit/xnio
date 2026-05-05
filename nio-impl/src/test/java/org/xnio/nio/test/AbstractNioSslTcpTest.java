@@ -25,15 +25,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.xnio.ChannelListener;
 import org.xnio.channels.ConnectedChannel;
 import org.xnio.channels.StreamSinkChannel;
 import org.xnio.channels.StreamSourceChannel;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Superclass for all ssl tcp test cases.
@@ -136,7 +136,7 @@ public abstract class AbstractNioSslTcpTest<T extends ConnectedChannel, R extend
         assertTrue(clientOK.get());
     }
 
-    @Test
+    @Override
     public void serverClose() throws Exception {
         log.info("Test: serverClose");
         final CountDownLatch latch = new CountDownLatch(2);
@@ -428,6 +428,6 @@ public abstract class AbstractNioSslTcpTest<T extends ConnectedChannel, R extend
             setReadListener(channel, sourceChannel -> log.info("server read event"));
             setWriteListener(channel, sinkChannel -> log.info("server write event"));
         });
-        Assert.assertTrue(latch.await(30, TimeUnit.SECONDS));
+        Assertions.assertTrue(latch.await(30, TimeUnit.SECONDS));
     }
 }

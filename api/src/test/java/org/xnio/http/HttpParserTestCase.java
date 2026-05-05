@@ -23,8 +23,8 @@ import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Stuart Douglas
@@ -41,7 +41,7 @@ public class HttpParserTestCase {
 
     public void runTest(String response, final int status, final String version, final String message, final String... header) throws IOException {
         final Map<String, String> headerMap = new HashMap<String, String>();
-        Assert.assertEquals("Headers must be a multiple of 2", 0, header.length % 2);
+        Assertions.assertEquals(0, header.length % 2, "Headers must be a multiple of 2");
         for (int i = 0; i < header.length; i += 2) {
             headerMap.put(header[i], header[i + 1]);
         }
@@ -84,16 +84,12 @@ public class HttpParserTestCase {
     }
 
     private void runAssertions(HttpUpgradeParser parser, final int status, final String version, final String message, final Map<String, String> headers) {
-        Assert.assertEquals(status, parser.getResponseCode());
-        Assert.assertEquals(version, parser.getHttpVersion());
-        Assert.assertEquals(message, parser.getMessage());
-        Assert.assertEquals(headers.size(), parser.getHeaders().size());
+        Assertions.assertEquals(status, parser.getResponseCode());
+        Assertions.assertEquals(version, parser.getHttpVersion());
+        Assertions.assertEquals(message, parser.getMessage());
+        Assertions.assertEquals(headers.size(), parser.getHeaders().size());
         for (Map.Entry<String, String> entry : headers.entrySet()) {
-            Assert.assertEquals(entry.getValue(), parser.getHeaders().get(entry.getKey()).get(0));
+        	Assertions.assertEquals(entry.getValue(), parser.getHeaders().get(entry.getKey()).get(0));
         }
-
-
     }
-
-
 }

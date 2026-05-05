@@ -19,11 +19,11 @@
 
 package org.xnio.streams;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.xnio.AssertReadWrite.assertReadMessage;
 
 import java.io.IOException;
@@ -31,7 +31,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for {@link Pipe}.
@@ -370,7 +370,7 @@ public class PipeTestCase {
                 assertEquals('7', inputStream.read());
                 break;
             default:
-                assertFalse("Should've read up to 5 bytes into 5-length bytes array, but read: " + read, read > 5);
+                assertFalse(read > 5, "Should've read up to 5 bytes into 5-length bytes array, but read: " + read);
         }
         assertEquals('8', inputStream.read());
         assertEquals('9', inputStream.read());

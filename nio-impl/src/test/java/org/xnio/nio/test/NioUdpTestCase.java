@@ -18,6 +18,10 @@
 
 package org.xnio.nio.test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetSocketAddress;
@@ -27,9 +31,9 @@ import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import junit.framework.TestCase;
 import org.jboss.logging.Logger;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xnio.Buffers;
 import org.xnio.IoUtils;
 import org.xnio.Xnio;
@@ -47,7 +51,7 @@ import org.xnio.channels.SocketAddressBuffer;
  * @author <a href="mailto:david.lloyd@redhat.com">David M. Lloyd</a>
  *
  */
-public final class NioUdpTestCase extends TestCase {
+public final class NioUdpTestCase {
     private static final int SERVER_PORT = 12345;
     private static final InetSocketAddress SERVER_SOCKET_ADDRESS;
     private static final InetSocketAddress CLIENT_SOCKET_ADDRESS;
@@ -142,18 +146,21 @@ public final class NioUdpTestCase extends TestCase {
         assertTrue(closedOk.get());
     }
 
+    @Test
     public void testServerCreate() throws Exception {
         log.info("Test: testServerCreate");
         doServerCreate(false);
     }
 
+    @Test
     public void testServerCreateMulticast() throws Exception {
         log.info("Test: testServerCreateMulticast");
         doServerCreate(true);
     }
 
     @SuppressWarnings("unused")
-    @Ignore /* XXX - depends on each server getting a separate thread */
+    @Disabled /* XXX - depends on each server getting a separate thread */
+    @Test
     public void testClientToServerTransmitNioToNio() throws Exception {
         if (true) return;
         log.info("Test: testClientToServerTransmitNioToNio");

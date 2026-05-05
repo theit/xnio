@@ -17,12 +17,12 @@
  */
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,11 +32,11 @@ import java.nio.channels.ClosedChannelException;
 import java.nio.channels.FileChannel;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xnio.Buffers;
 import org.xnio.ChannelPipe;
 import org.xnio.IoUtils;
@@ -74,13 +74,13 @@ public abstract class AbstractStreamSinkSourceChannelTest<S extends StreamSinkCh
      */
     protected abstract void initChannels(XnioWorker xnioWorker, OptionMap optionMap, TestChannelListener<S> sinkChannelListener, TestChannelListener<T> sourceChannelListener) throws IOException; 
 
-    @BeforeClass
+    @BeforeAll
     public static void createWorker() throws IOException {
         xnio = Xnio.getInstance("nio", AbstractStreamSinkSourceChannelTest.class.getClassLoader());
         worker = xnio.createWorker(OptionMap.EMPTY);
     }
 
-    @AfterClass
+    @AfterAll
     public static void shutdownWorker() throws IOException {
         worker.shutdownNow();
     }
@@ -99,8 +99,8 @@ public abstract class AbstractStreamSinkSourceChannelTest<S extends StreamSinkCh
         final TestChannelListener<S> sinkChannelListener = new TestChannelListener<S>();
         final TestChannelListener<T> sourceChannelListener = new TestChannelListener<T>();
         initChannels(worker, optionMap, sinkChannelListener, sourceChannelListener);
-        assertTrue("Subclass must invoke the channel listeners to setup sink and source channels", sinkChannelListener.isInvokedYet());
-        assertTrue("Subclass must invoke the channel listeners to setup sink and source channels", sourceChannelListener.isInvokedYet());
+        assertTrue(sinkChannelListener.isInvokedYet(), "Subclass must invoke the channel listeners to setup sink and source channels");
+        assertTrue(sourceChannelListener.isInvokedYet(), "Subclass must invoke the channel listeners to setup sink and source channels");
         sinkChannel = sinkChannelListener.getChannel();
         assertNotNull(sinkChannel);
         assertTrue(sinkChannel.isOpen());
@@ -117,7 +117,7 @@ public abstract class AbstractStreamSinkSourceChannelTest<S extends StreamSinkCh
         initChannels(worker, OptionMap.EMPTY);
     }
 
-    @After
+    @AfterEach
     public void closeChannels() throws IOException {
         if (sinkChannel != null) {
             sinkChannel.close();
@@ -321,7 +321,7 @@ public abstract class AbstractStreamSinkSourceChannelTest<S extends StreamSinkCh
     }
 
     @Test
-    @Ignore("Does not follow thread model")
+    @Disabled("Does not follow thread model")
     public void suspendResumeReadsAndWrites() throws IOException, InterruptedException {
         initChannels();
         assertFalse(sourceChannel.isReadResumed());

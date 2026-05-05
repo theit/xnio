@@ -19,11 +19,11 @@
 
 package org.xnio.ssl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.xnio.ssl.mock.SSLEngineMock.CLOSE_MSG;
 import static org.xnio.ssl.mock.SSLEngineMock.HANDSHAKE_MSG;
 import static org.xnio.ssl.mock.SSLEngineMock.HandshakeAction.FINISH;
@@ -42,11 +42,8 @@ import java.util.concurrent.TimeoutException;
 
 import javax.net.ssl.SSLEngineResult.HandshakeStatus;
 
-import org.jmock.integration.junit4.JUnitRuleMockery;
-import org.jmock.lib.concurrent.Synchroniser;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xnio.Buffers;
 import org.xnio.ssl.mock.SSLEngineMock;
 
@@ -56,13 +53,8 @@ import org.xnio.ssl.mock.SSLEngineMock;
  * 
  * @author <a href="mailto:frainone@redhat.com">Flavia Rainone</a>
  */
-@Ignore // ignoring for now as these tests hang more consistently than they pass
+@Disabled // ignoring for now as these tests hang more consistently than they pass
 public class ConnectedSslStreamChannelReadWriteTestCase extends AbstractConnectedSslStreamChannelTest{
-    @Rule
-    public final JUnitRuleMockery context = new JUnitRuleMockery() {{
-        setThreadingPolicy(new Synchroniser());
-    }};
-
     private Object readWriteMonitor = new Object();
 
     private boolean syncFlush() throws IOException {
@@ -517,7 +509,7 @@ public class ConnectedSslStreamChannelReadWriteTestCase extends AbstractConnecte
                 }
                 Buffers.copy(buffer, buffers, 0, 10);
                 buffer.flip();
-                assertEquals("This is what we read '" + Buffers.getModifiedUtf8(buffer) + "'", expectedReadLength, totalLength);
+                assertEquals(expectedReadLength, totalLength, "This is what we read '" + Buffers.getModifiedUtf8(buffer) + "'");
                 
             } catch (IOException e) {
                 throw new RuntimeException("Unexpected IOException while reading", e);
@@ -599,7 +591,7 @@ public class ConnectedSslStreamChannelReadWriteTestCase extends AbstractConnecte
                     assertEquals(-1, sslChannel.read(buffer));
                 }
                 buffer.flip();
-                assertEquals("This is what we read '" + Buffers.getModifiedUtf8(buffer) + "'", expectedReadLength, totalLength);
+                assertEquals(expectedReadLength, totalLength, "This is what we read '" + Buffers.getModifiedUtf8(buffer) + "'");
             } catch (IOException e) {
                 throw new RuntimeException("Unexpected IOException while reading", e);
             }

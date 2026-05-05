@@ -19,10 +19,9 @@
 
 package org.xnio.channels;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.xnio.Buffers;
 import org.xnio.ChannelListener;
 import org.xnio.Option;
@@ -48,12 +47,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.LongFunction;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.xnio.AssertReadWrite.assertReadMessage;
 import static org.xnio.AssertReadWrite.assertWrittenMessage;
 
@@ -67,7 +66,7 @@ public class ChannelsTestCase {
     private ConnectedStreamChannelMock connectedChannelMock;
     private MessageChannelMock messageChannelMock;
 
-    @Before
+    @BeforeEach
     public void init() {
         connectedChannelMock = new ConnectedStreamChannelMock();
         messageChannelMock = new MessageChannelMock(connectedChannelMock);
@@ -752,12 +751,9 @@ public class ChannelsTestCase {
         });
     }
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
     @Test
-    public void drainFileChannel() throws IOException {
-        final File file1 = folder.newFile();
+    public void drainFileChannel(@TempDir File tempDir) throws IOException {
+        final File file1 = File.createTempFile("tmp", "", tempDir);
         //write out data to the test files
         final FileWriter fw1 = new FileWriter( file1 );
         final BufferedWriter bw1 = new BufferedWriter( fw1 );

@@ -19,12 +19,12 @@
 
 package org.xnio.ssl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -35,11 +35,11 @@ import java.util.concurrent.CancellationException;
 
 import javax.net.ssl.SSLContext;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xnio.ChannelListener;
 import org.xnio.IoFuture;
 import org.xnio.OptionMap;
@@ -70,7 +70,7 @@ public class JsseXnioSslTestCase {
 
     private static final int SERVER_PORT = 23456;
 
-    @BeforeClass
+    @BeforeAll
     public static void setKeyStoreAndTrustStore() {
         final URL storePath = JsseXnioSslTestCase.class.getClassLoader().getResource(DEFAULT_KEY_STORE);
         if (System.getProperty(KEY_STORE_PROPERTY) == null) {
@@ -93,7 +93,7 @@ public class JsseXnioSslTestCase {
     private XnioSsl xnioSsl;
     private XnioIoThreadMock threadMock;
 
-    @Before
+    @BeforeEach
     public void init() throws Exception {
         serverAddress = new InetSocketAddress(Inet4Address.getByAddress(new byte[] { 127, 0, 0, 1 }), SERVER_PORT);
         xnio = Xnio.getInstance("xnio-mock", JsseXnioSslTestCase.class.getClassLoader());
@@ -103,7 +103,7 @@ public class JsseXnioSslTestCase {
         xnioSsl = xnio.getSslProvider(OptionMap.EMPTY);
     }
 
-    @After
+    @AfterEach
     public void closeIoThread() {
         threadMock.closeIoThread();
     }
@@ -260,7 +260,7 @@ public class JsseXnioSslTestCase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void connectSsl4() throws Exception {
         final InetSocketAddress localAddress = new InetSocketAddress(600);
         final TestChannelListener<BoundChannel> bindListener = new TestChannelListener<BoundChannel>();

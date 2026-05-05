@@ -19,6 +19,13 @@
 
 package org.xnio;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.xnio.AssertReadWrite.assertWrittenMessage;
 
 import java.io.BufferedInputStream;
@@ -56,8 +63,7 @@ import java.util.logging.LogRecord;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.Test;
 import org.xnio.IoFuture.Status;
 import org.xnio.channels.ConnectedStreamChannel;
 import org.xnio.mock.ConnectedStreamChannelMock;
@@ -69,8 +75,9 @@ import org.xnio.mock.ConnectedStreamChannelMock;
  * @author <a href="mailto:flavia.rainone@jboss.com">Flavia Rainone</a>
  *
  */
-public final class IoUtilsTestCase extends TestCase {
+public final class IoUtilsTestCase {
 
+    @Test
     public void testDirectExecutor() {
         final Thread t = Thread.currentThread();
         final boolean ok[] = new boolean[1];
@@ -84,6 +91,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertNotNull(IoUtils.directExecutor().toString());
     }
 
+    @Test
     public void testNullExecutor() {
         IoUtils.nullExecutor().execute(new Runnable() {
             public void run() {
@@ -93,6 +101,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertNotNull(IoUtils.nullExecutor().toString());
     }
 
+    @Test
     public void testNullCloseable() throws IOException {
         //nothing should happen
         IoUtils.nullCloseable().close();
@@ -103,6 +112,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertNotNull(IoUtils.nullCloseable().toString());
     }
 
+    @Test
     public void testNullCancellable() throws IOException {
         //nothing should happen
         assertSame(IoUtils.nullCancellable(), IoUtils.nullCancellable().cancel());
@@ -112,6 +122,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertNotNull(IoUtils.nullCancellable().toString());
     }
 
+    @Test
     public void testSafeClose() {
         IoUtils.safeClose(new Closeable() {
             public void close() throws IOException {
@@ -136,6 +147,7 @@ public final class IoUtilsTestCase extends TestCase {
         IoUtils.safeClose((Closeable) null);        // should do nothing if target is null
     }
 
+    @Test
     public void testSafeCloseSocket() {
         IoUtils.safeClose(new Socket() {
             public void close() throws IOException {
@@ -160,6 +172,7 @@ public final class IoUtilsTestCase extends TestCase {
         IoUtils.safeClose((Socket) null);           // should do nothing if target is null
     }
 
+    @Test
     public void testSafeCloseDatagramSocket() throws SocketException {
         IoUtils.safeClose(new DatagramSocket() {
             public void close() {
@@ -174,6 +187,7 @@ public final class IoUtilsTestCase extends TestCase {
         IoUtils.safeClose((DatagramSocket) null);   // should do nothing if target is null
     }
 
+    @Test
     public void testSafeCloseSelector() {
         IoUtils.safeClose(new TestSelector() {
             public void close() throws IOException {
@@ -198,6 +212,7 @@ public final class IoUtilsTestCase extends TestCase {
         IoUtils.safeClose((Selector) null);        // should do nothing if target is null
     }
 
+    @Test
     public void testSafeCloseServerSocket() throws IOException {
         IoUtils.safeClose(new ServerSocket() {
             public void close() throws IOException {
@@ -222,6 +237,7 @@ public final class IoUtilsTestCase extends TestCase {
         IoUtils.safeClose((ServerSocket) null);     // should do nothing if target is null
     }
 
+    @Test
     public void testSafeCloseZipFile() throws IOException {
         final File file = File.createTempFile("foo", ".zip");
         file.deleteOnExit();
@@ -246,6 +262,7 @@ public final class IoUtilsTestCase extends TestCase {
         IoUtils.safeClose((ZipFile) null);         // should do nothing if target is null
     }
 
+    @Test
     public void testSafeCloseHandler() throws IOException {
         IoUtils.safeClose(new Handler() {
             public void close() {
@@ -271,6 +288,7 @@ public final class IoUtilsTestCase extends TestCase {
         IoUtils.safeClose((Handler) null);         // should do nothing if target is null
     }
 
+    @Test
     public void testSafeCloseIoFuture() {
         final TestIoFuture<Closeable> future1 = new TestIoFuture<Closeable>();
         IoUtils.safeClose(future1);
@@ -288,6 +306,7 @@ public final class IoUtilsTestCase extends TestCase {
         IoUtils.safeClose((IoFuture<? extends Closeable>) null);
     }
 
+    @Test
     public void testAttachmentClosingNotifier() {
         final TestCloseable closeable = new TestCloseable();
         assertTrue(closeable.isOpen());
@@ -295,6 +314,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertFalse(closeable.isOpen());
     }
 
+    @Test
     public void testClosingNotifier() {
         final TestCloseable closeable = new TestCloseable();
         final TestIoFuture<Closeable> future = new TestIoFuture<Closeable>();
@@ -304,6 +324,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertFalse(closeable.isOpen());
     }
 
+    @Test
     public void testRunnableNotifier() {
         final TestRunnable testRunnable = new TestRunnable();
         final IoFuture.Notifier<Void, Void> notifier = IoUtils.runnableNotifier(testRunnable);
@@ -313,6 +334,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertTrue(testRunnable.isInvoked());
     }
 
+    @Test
     public void testResultNotifier() throws Exception {
         final FutureResult<Closeable> futureResult1 = new FutureResult<Closeable>();
         final FutureResult<Closeable> futureResult2 = new FutureResult<Closeable>();
@@ -340,6 +362,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertSame(result, futureResult3.getIoFuture().get());
     }
 
+    @Test
     public void testChannelListenerNotifier() {
         final ConnectedStreamChannelMock channel = new ConnectedStreamChannelMock();
         final TestChannelListener channelListener = new TestChannelListener();
@@ -362,6 +385,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertSame(channel, channelListener.getChannel());
     }
 
+    @Test
     public void testIoFutureWrapper() throws Exception {
         // test future wrapper with ioFuture1, which will have a value successfully set
         final TestIoFuture<String> ioFuture1 = new TestIoFuture<String>();
@@ -474,6 +498,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertFalse(future4.cancel(false));
     }
 
+    @Test
     public void testAwaitAll() throws InterruptedException {
         final TestIoFuture<Void> future1 = new TestIoFuture<Void>();
         final TestIoFuture<Void> future2 = new TestIoFuture<Void>();
@@ -536,6 +561,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertNull(awaiterTask3.getInterruptedException());
     }
 
+    @Test
     public void testCast() throws Exception {
         // future with result set
         final TestIoFuture<Object> future1 = new TestIoFuture<Object>();
@@ -610,6 +636,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertSame(failure, castFuture3.getException());
     }
 
+    @Test
     public void testSafeShutdownReads() {
         final ChannelMock channel1 = new ChannelMock();
         final ChannelMock channel2 = new ChannelMock();
@@ -624,6 +651,7 @@ public final class IoUtilsTestCase extends TestCase {
         IoUtils.safeShutdownReads(null); // should just ignore
     }
 
+    @Test
     public void testTransfer() throws IOException {
         final ConnectedStreamChannelMock sourceChannel = new ConnectedStreamChannelMock();
         final ConnectedStreamChannelMock sinkChannel = new ConnectedStreamChannelMock();
@@ -643,6 +671,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertWrittenMessage(sinkChannel, "a kinda big text to transfer from source to sink");
     }
 
+    @Test
     public void testManagerNotifier() throws Exception {
         // add manager notifier to a future that will be cancelled
         final TestIoFuture<Channel> future1 = new TestIoFuture<Channel>();
@@ -687,6 +716,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertSame(result, manager6.getIoFuture().get());
     }
 
+    @Test
     public void testRetryingChannelSource() throws Exception {
         final TestChannelSource testChannelSource1 = new TestChannelSource(0);
         final TestChannelSource testChannelSource2 = new TestChannelSource(3);
@@ -752,6 +782,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testClosingCancellable() {
         final TestCloseable closeable = new TestCloseable();
         final Cancellable closingCancellable = IoUtils.closingCancellable(closeable);
@@ -761,6 +792,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertFalse(closeable.isOpen());
     }
 
+    @Test
     public void testThreadLocalRandom() throws Exception {
         final Random random = IoUtils.getThreadLocalRandom();
         random.nextFloat();
@@ -775,6 +807,7 @@ public final class IoUtilsTestCase extends TestCase {
         assertNotNull(deserializedRandom);
     }
 
+    @Test
     public void testTransferThroughBuffer() throws IOException{
         byte[] bytes = "This bytes".getBytes();
         ByteArrayInputStream in = new ByteArrayInputStream(bytes);

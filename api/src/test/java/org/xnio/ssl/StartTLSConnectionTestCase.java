@@ -19,12 +19,12 @@
 
 package org.xnio.ssl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.xnio.ssl.mock.SSLEngineMock.CLOSE_MSG;
 import static org.xnio.ssl.mock.SSLEngineMock.HANDSHAKE_MSG;
 import static org.xnio.ssl.mock.SSLEngineMock.HandshakeAction.FINISH;
@@ -37,7 +37,7 @@ import java.nio.ByteBuffer;
 import javax.net.ssl.SSLEngineResult.HandshakeStatus;
 
 import org.jmock.Expectations;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xnio.ByteBufferPool;
 import org.xnio.ChannelListener;
 import org.xnio.Options;

@@ -19,9 +19,9 @@
 
 package org.xnio.channels;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.xnio.AssertReadWrite.assertReadMessage;
 
 import java.io.IOException;
@@ -29,8 +29,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ScatteringByteChannel;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.mock.ConnectedStreamChannelMock;
 
 /**
@@ -41,7 +41,7 @@ import org.xnio.mock.ConnectedStreamChannelMock;
 public abstract class AbstractBlockingReadableByteChannelTest<T extends ScatteringByteChannel> {
     private ConnectedStreamChannelMock channelMock;
 
-    @Before
+    @BeforeEach
     public void initChannelMock() {
         channelMock = new ConnectedStreamChannelMock();
         channelMock.enableRead(true);

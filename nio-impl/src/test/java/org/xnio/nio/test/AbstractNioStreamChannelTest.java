@@ -17,20 +17,20 @@
  */
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xnio.Buffers;
 import org.xnio.OptionMap;
 import org.xnio.XnioWorker;
@@ -121,7 +121,7 @@ public abstract class AbstractNioStreamChannelTest extends AbstractStreamSinkSou
     }
 
     @Test
-    @Ignore("Does not follow thread model")
+    @Disabled("Does not follow thread model")
     public void suspendResumeReadsAndWrites() throws IOException, InterruptedException {
         initChannels();
         assertFalse(channel1.isReadResumed());

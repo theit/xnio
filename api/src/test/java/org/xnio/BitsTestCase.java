@@ -19,9 +19,13 @@
 
 package org.xnio;
 
-import junit.framework.TestCase;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.xnio.Bits.*;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for {@link Bits}.
@@ -29,7 +33,8 @@ import static org.xnio.Bits.*;
  * @author <a href="mailto:david.lloyd@redhat.com">David M. Lloyd</a>
  * @author <a href="mailto:flavia.rainone@jboss.com">Flavia Rainone</a>
  */
-public final class BitsTestCase extends TestCase {
+public final class BitsTestCase {
+    @Test
     public void testBitMask() {
         assertEquals(0x00FFFF00, intBitMask(8, 23));
         assertEquals(1, intBitMask(0, 0));
@@ -41,6 +46,7 @@ public final class BitsTestCase extends TestCase {
         assertEquals(0x8000000000000000L, longBitMask(63, 63));
     }
 
+    @Test
     public void testInvalidBitMask() {
         AssertionError expected = null;
         try {
@@ -85,6 +91,7 @@ public final class BitsTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testAllAreClearInt() {
         assertTrue(allAreClear(0xFF00FF00, 0x00FF00FF));
         assertTrue(allAreClear(0xFF00FF00, 0x00230042));
@@ -96,6 +103,7 @@ public final class BitsTestCase extends TestCase {
         assertFalse(allAreClear(0xFF00FF00, 0x80000000));
     }
 
+    @Test
     public void testAllAreClearLong() {
         assertTrue(allAreClear(0xFF00FF00FF00FF00L, 0x00FF00FF00FF00FFL));
         assertTrue(allAreClear(0xFF00FF00FF00FF00L, 0x0023004200110055L));
@@ -109,6 +117,7 @@ public final class BitsTestCase extends TestCase {
 
     // anyAreSet is the inverse of allAreClear, so each test should be duplicated in both sections
 
+    @Test
     public void testAnyAreSetInt() {
         assertFalse(anyAreSet(0xFF00FF00, 0x00FF00FF));
         assertFalse(anyAreSet(0xFF00FF00, 0x00230042));
@@ -120,6 +129,7 @@ public final class BitsTestCase extends TestCase {
         assertTrue(anyAreSet(0xFF00FF00, 0x80000000));
     }
 
+    @Test
     public void testAnyAreSetLong() {
         assertFalse(anyAreSet(0xFF00FF00FF00FF00L, 0x00FF00FF00FF00FFL));
         assertFalse(anyAreSet(0xFF00FF00FF00FF00L, 0x0023004200110055L));
@@ -131,6 +141,7 @@ public final class BitsTestCase extends TestCase {
         assertTrue(anyAreSet(0xFF00FF00FF00FF00L, 0x8000000000000000L));
     }
 
+    @Test
     public void testAllAreSetInt() {
         assertTrue(allAreSet(0xFF00FF00, 0xFF00FF00));
         assertTrue(allAreSet(0xFF00FF00, 0x12003400));
@@ -141,6 +152,7 @@ public final class BitsTestCase extends TestCase {
         assertFalse(allAreSet(0xFF00FF00, 0x00FF0000));
     }
 
+    @Test
     public void testAllAreSetLong() {
         assertTrue(allAreSet(0xFF00FF00FF00FF00L, 0xFF00FF00FF00FF00L));
         assertTrue(allAreSet(0xFF00FF00FF00FF00L, 0x1200340056007800L));
@@ -153,6 +165,7 @@ public final class BitsTestCase extends TestCase {
 
     // anyAreClear is the inverse of allAreSet, so each test should be duplicated in both sections
 
+    @Test
     public void testAnyAreClearInt() {
         assertFalse(anyAreClear(0xFF00FF00, 0xFF00FF00));
         assertFalse(anyAreClear(0xFF00FF00, 0x12003400));
@@ -163,6 +176,7 @@ public final class BitsTestCase extends TestCase {
         assertTrue(anyAreClear(0xFF00FF00, 0x00FF0000));
     }
 
+    @Test
     public void testAnyAreClearLong() {
         assertFalse(anyAreClear(0xFF00FF00FF00FF00L, 0xFF00FF00FF00FF00L));
         assertFalse(anyAreClear(0xFF00FF00FF00FF00L, 0x1200340056007800L));
@@ -175,6 +189,7 @@ public final class BitsTestCase extends TestCase {
 
     // unsigned methods
 
+    @Test
     public void testUnsignedByte() {
         assertEquals(0x5, unsigned((byte) 0x5));
         assertEquals(0xfb, unsigned((byte) -0x5));
@@ -184,6 +199,7 @@ public final class BitsTestCase extends TestCase {
         assertEquals(0x1, unsigned((byte) -0xff));
     }
 
+    @Test
     public void testUnsginedShort() {
         assertEquals(0xf875, unsigned((short) -0x78b));
         assertEquals(0x78b, unsigned((short) -0xf875));
@@ -192,6 +208,7 @@ public final class BitsTestCase extends TestCase {
         assertEquals(0x1, unsigned((short) -0xffff));
     }
 
+    @Test
     public void testUnsignedInt() {
         assertEquals(0xffffffffl, unsigned((int) 0xffffffff));
 
@@ -207,6 +224,7 @@ public final class BitsTestCase extends TestCase {
 
     // byte array methods
 
+    @Test
     public void testByteArrayRead() {
         final byte[] bytes = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
         assertEquals(0x01020304, intFromBytesBE(bytes, 0));

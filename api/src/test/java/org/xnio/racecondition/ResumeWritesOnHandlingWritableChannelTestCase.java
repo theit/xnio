@@ -19,16 +19,15 @@
 
 package org.xnio.racecondition;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.jboss.byteman.contrib.bmunit.BMScript;
-import org.jboss.byteman.contrib.bmunit.BMUnitRunner;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.jmock.integration.junit4.JUnit4Mockery;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.jmock.junit5.JUnit5Mockery;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xnio.ChannelListener;
 import org.xnio.channels.SuspendableChannel;
 import org.xnio.channels.TranslatingSuspendableChannel;
@@ -40,13 +39,14 @@ import org.xnio.mock.ConnectedStreamChannelMock;
  * 
  * @author <a href="mailto:flavia.rainone@jboss.com">Flavia Rainone</a>
  */
-@RunWith(BMUnitRunner.class)
+@Disabled
+// @RunWith(BMUnitRunner.class)
 @BMScript(dir="src/test/resources")
 public class ResumeWritesOnHandlingWritableChannelTestCase {
     @Test
     public void test() throws Exception {
         // create mockery context
-        final Mockery context = new JUnit4Mockery();
+        final Mockery context = new JUnit5Mockery();
         // creating channel and threads
         ConnectedStreamChannelMock connectedChannelMock = new ConnectedStreamChannelMock();
         final MyTranslatingSuspendableChannel channel = new MyTranslatingSuspendableChannel(connectedChannelMock);

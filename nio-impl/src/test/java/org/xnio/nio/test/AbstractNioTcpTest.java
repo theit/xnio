@@ -31,9 +31,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jboss.logging.Logger;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.ChannelListener;
 import org.xnio.ChannelListeners;
 import org.xnio.IoFuture;
@@ -48,8 +48,8 @@ import org.xnio.channels.ConnectedChannel;
 import org.xnio.channels.StreamSinkChannel;
 import org.xnio.channels.StreamSourceChannel;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Abstract test for TCP connected channels.
@@ -152,12 +152,12 @@ public abstract class AbstractNioTcpTest<T extends ConnectedChannel, R extends S
         this.clientOptionMap = clientOptionMap;
     }
 
-    @Before
+    @BeforeEach
     public void clearProblems() {
         problems.clear();
     }
 
-    @After
+    @AfterEach
     public void checkProblems() {
         for (Throwable problem : problems) {
             log.error("Test exception", problem);

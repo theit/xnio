@@ -19,13 +19,13 @@
 
 package org.xnio.streams;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.xnio.AssertReadWrite.assertReadMessage;
 
 import java.io.IOException;
@@ -37,8 +37,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.Buffers;
 import org.xnio.ByteBufferSlicePool;
 import org.xnio.Pooled;
@@ -52,7 +52,7 @@ public class BufferPipeInputStreamTestCase {
     private TestInputHandler handler;
     private BufferPipeInputStream stream;
 
-    @Before
+    @BeforeEach
     public void before() {
         handler = new TestInputHandler();
         stream = new BufferPipeInputStream(handler);
@@ -849,13 +849,13 @@ public class BufferPipeInputStreamTestCase {
         int readByte2= read2.getReadResult();
         int readByte3 = read3.getReadResult();
 
-        assertTrue("Unexpected values for read results: '" + (char) readByte1 + "', '" + (char) readByte2 + "', and '" + (char) readByte3 + "'",
-                (readByte1 == 'a' && readByte2 == 'b' && readByte3 == 'c') ||
+        assertTrue((readByte1 == 'a' && readByte2 == 'b' && readByte3 == 'c') ||
                 (readByte1 == 'a' && readByte2 == 'c' && readByte3 == 'b') ||
                 (readByte1 == 'b' && readByte2 == 'a' && readByte3 == 'c') ||
                 (readByte1 == 'b' && readByte2 == 'c' && readByte3 == 'a') ||
                 (readByte1 == 'c' && readByte2 == 'a' && readByte3 == 'b') ||
-                (readByte1 == 'c' && readByte2 == 'b' && readByte3 == 'a'));
+                (readByte1 == 'c' && readByte2 == 'b' && readByte3 == 'a'),
+                "Unexpected values for read results: '" + (char) readByte1 + "', '" + (char) readByte2 + "', and '" + (char) readByte3 + "'");
 
         // "cde" is not handled because it was not fully read, only the 'c' char was read from "cde" message
         assertHandledMessages(false, "ab");
@@ -1096,7 +1096,7 @@ public class BufferPipeInputStreamTestCase {
                 fail("Message " + message + " is not handled");
             }
         }
-        assertFalse("There is one or more unexpected handled messages", handledMessages.hasNext());
+        assertFalse(handledMessages.hasNext(), "There is one or more unexpected handled messages");
         assertEquals(closed, handler.isClosed());
     }
 

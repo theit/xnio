@@ -19,8 +19,8 @@
 
 package org.xnio.ssl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOError;
 import java.io.IOException;
@@ -30,9 +30,9 @@ import javax.net.ssl.SSLSession;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.jmock.integration.junit4.JUnit4Mockery;
+import org.jmock.junit5.JUnit5Mockery;
 import org.jmock.lib.concurrent.Synchroniser;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xnio.ByteBufferPool;
 import org.xnio.channels.AssembledConnectedSslStreamChannel;
 import org.xnio.channels.ConnectedSslStreamChannel;
@@ -59,7 +59,7 @@ public class ConnectedSslStreamChannelBufferOverflowTestCase extends AbstractCon
 
     @Override
     protected ConnectedSslStreamChannel createSslChannel() {
-        context = new JUnit4Mockery() {{
+        context = new JUnit5Mockery() {{
             setThreadingPolicy(new Synchroniser());
         }};
         connectedChannelMock = new ConnectedStreamChannelMock();

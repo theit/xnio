@@ -23,8 +23,8 @@ import java.net.InetSocketAddress;
 import java.net.URL;
 import java.security.GeneralSecurityException;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.xnio.ChannelListener;
 import org.xnio.IoFuture;
 import org.xnio.OptionMap;
@@ -51,7 +51,7 @@ public class NioSslTcpChannelTestCase extends AbstractNioSslTcpTest<ConnectedSsl
     private static final String DEFAULT_KEY_STORE = "keystore.jks";
     private static final String DEFAULT_KEY_STORE_PASSWORD = "jboss-remoting-test";
 
-    @BeforeClass
+    @BeforeAll
     public static void setKeyStoreAndTrustStore() {
         final URL storePath = NioSslTcpChannelTestCase.class.getClassLoader().getResource(DEFAULT_KEY_STORE);
         if (System.getProperty(KEY_STORE_PROPERTY) == null) {
@@ -68,7 +68,7 @@ public class NioSslTcpChannelTestCase extends AbstractNioSslTcpTest<ConnectedSsl
         }
     }
 
-    @Before
+    @BeforeEach
     public void initXnioSsl() throws GeneralSecurityException {
         xnioSsl = Xnio.getInstance("nio", NioSslTcpChannelTestCase.class.getClassLoader()).getSslProvider(OptionMap.EMPTY);
     }

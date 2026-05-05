@@ -21,19 +21,19 @@
  */
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.Buffers;
 import org.xnio.ChannelPipe;
 import org.xnio.Option;
@@ -55,7 +55,7 @@ public class FullDuplexChannelPipeTestCase extends AbstractNioStreamChannelTest 
     private StreamChannel leftChannel;
     private StreamChannel rightChannel;
 
-    @Before
+    @BeforeEach
     public void initChannels() throws IOException {
         super.initChannels();
     }
@@ -621,9 +621,9 @@ public class FullDuplexChannelPipeTestCase extends AbstractNioStreamChannelTest 
         final Option<?>[] unsupportedOptions = OptionHelper.getNotSupportedOptions(Options.READ_TIMEOUT,
                 Options.WRITE_TIMEOUT);
         for (Option<?> option: unsupportedOptions) {
-            assertFalse("Channel supports " + option, leftChannel.supportsOption(option));
-            assertNull("Expected null value for option " + option + " but got " + leftChannel.getOption(option) +
-                    " instead", leftChannel.getOption(option));
+            assertFalse(leftChannel.supportsOption(option), "Channel supports " + option);
+            assertNull(leftChannel.getOption(option),
+                    "Expected null value for option " + option + " but got " + leftChannel.getOption(option) + " instead");
         }
 
         assertTrue(leftChannel.supportsOption(Options.READ_TIMEOUT));
@@ -631,8 +631,8 @@ public class FullDuplexChannelPipeTestCase extends AbstractNioStreamChannelTest 
 
         leftChannel.setOption(Options.READ_TIMEOUT, 39710);
         leftChannel.setOption(Options.WRITE_TIMEOUT, 1301093);
-        assertNull("Unexpected option value: " + leftChannel.getOption(Options.MAX_INBOUND_MESSAGE_SIZE),
-                leftChannel.setOption(Options.MAX_INBOUND_MESSAGE_SIZE, 50000));// unsupported
+        assertNull(leftChannel.setOption(Options.MAX_INBOUND_MESSAGE_SIZE, 50000),
+                "Unexpected option value: " + leftChannel.getOption(Options.MAX_INBOUND_MESSAGE_SIZE));// unsupported
 
         assertEquals(39710, (int) leftChannel.getOption(Options.READ_TIMEOUT));
         assertEquals(1301093, (int) leftChannel.getOption(Options.WRITE_TIMEOUT));

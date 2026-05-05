@@ -19,11 +19,11 @@
 
 package org.xnio.channels;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,9 +33,9 @@ import java.nio.channels.FileChannel;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.ChannelListener;
 import org.xnio.FileAccess;
 import org.xnio.OptionMap;
@@ -56,14 +56,14 @@ public class EmptyStreamSourceChannelTestCase {
     private EmptyStreamSourceChannel channel;
     private XnioIoThreadMock threadMock;
 
-    @Before
+    @BeforeEach
     public void createChannel() throws Exception {
         threadMock = new XnioIoThreadMock(null);
         threadMock.start();
         this.channel = new EmptyStreamSourceChannel(threadMock);
     }
 
-    @After
+    @AfterEach
     public void closeIoThread() {
         threadMock.closeIoThread();
     }

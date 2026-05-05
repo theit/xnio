@@ -22,8 +22,8 @@ package org.xnio.ssl;
 import java.io.IOError;
 import java.io.IOException;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.xnio.AssertReadWrite;
 import org.xnio.ByteBufferPool;
 import org.xnio.channels.AssembledConnectedSslStreamChannel;
@@ -48,7 +48,7 @@ public abstract class AbstractConnectedSslStreamChannelTest extends AbstractSslT
     // the xnio IO thread
     protected XnioIoThreadMock threadMock;
 
-    @Override @Before
+    @Override @BeforeEach
     public void createChannelMock() throws IOException {
         super.createChannelMock();
         final XnioWorkerMock worker = new XnioWorkerMock();
@@ -59,7 +59,7 @@ public abstract class AbstractConnectedSslStreamChannelTest extends AbstractSslT
         sslChannel = createSslChannel();
     }
 
-    @After
+    @AfterEach
     public void closeIoThread() {
         threadMock.closeIoThread();
     }

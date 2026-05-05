@@ -17,18 +17,18 @@
  */
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.TrustManager;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xnio.FileAccess;
 import org.xnio.Option;
 import org.xnio.OptionMap;
@@ -316,7 +316,7 @@ public class ConnectionOptionSetupTestCase extends TcpServerTest {
         assertEquals(25, (int) server.getOption(Options.CONNECTION_LOW_WATER));
 
         for (Option<?> option: unsupportedOptions) {
-            assertNull("Non null value for option " + option + ": " + server.getOption(option), server.getOption(option));
+            assertNull(server.getOption(option), "Non null value for option " + option + ": " + server.getOption(option));
             assertFalse(server.supportsOption(option));
         }
 
@@ -418,7 +418,7 @@ public class ConnectionOptionSetupTestCase extends TcpServerTest {
         assertEquals(190, (int) server.getOption(Options.CONNECTION_LOW_WATER));
 
         for (Option<?> option: unsupportedOptions) {
-            assertNull("Non null value for option " + option + ": " + server.getOption(option), server.getOption(option));
+            assertNull(server.getOption(option), "Non null value for option " + option + ": " + server.getOption(option));
             assertFalse(server.supportsOption(option));
         }
         server.close();

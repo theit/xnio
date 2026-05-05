@@ -19,8 +19,8 @@
 
 package org.xnio.streams;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -28,7 +28,7 @@ import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for {@link ReaderInputStream}.

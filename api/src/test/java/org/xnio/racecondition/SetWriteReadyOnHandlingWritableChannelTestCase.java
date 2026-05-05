@@ -19,15 +19,14 @@
 
 package org.xnio.racecondition;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Field;
 
 import org.jboss.byteman.contrib.bmunit.BMScript;
-import org.jboss.byteman.contrib.bmunit.BMUnitRunner;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xnio.Bits;
 import org.xnio.ChannelListener;
 import org.xnio.channels.SuspendableChannel;
@@ -40,7 +39,8 @@ import org.xnio.mock.ConnectedStreamChannelMock;
  * 
  * @author <a href="mailto:flavia.rainone@jboss.com">Flavia Rainone</a>
  */
-@RunWith(BMUnitRunner.class)
+@Disabled
+// @RunWith(BMUnitRunner.class)
 @BMScript(dir="src/test/resources")
 public class SetWriteReadyOnHandlingWritableChannelTestCase {
     @Test

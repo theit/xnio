@@ -19,9 +19,9 @@
 
 package org.xnio.ssl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.xnio.ssl.mock.SSLEngineMock.CLOSE_MSG;
 import static org.xnio.ssl.mock.SSLEngineMock.HANDSHAKE_MSG;
 import static org.xnio.ssl.mock.SSLEngineMock.HandshakeAction.FINISH;
@@ -36,11 +36,7 @@ import java.nio.ByteBuffer;
 
 import javax.net.ssl.SSLEngineResult.HandshakeStatus;
 
-import org.jmock.integration.junit4.JMock;
-import org.jmock.integration.junit4.JUnitRuleMockery;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.xnio.channels.AssembledConnectedSslStreamChannel;
 import org.xnio.ssl.mock.SSLEngineMock;
 
@@ -51,9 +47,6 @@ import org.xnio.ssl.mock.SSLEngineMock;
  * @author <a href="mailto:frainone@redhat.com">Flavia Rainone</a>
  */
 public class ConnectedSslStreamChannelReadTestCase extends AbstractConnectedSslStreamChannelTest{
-    @Rule
-    public final JUnitRuleMockery context = new JUnitRuleMockery();
-
     @Test
     public void readWithoutHandshake() throws IOException {
         // no handshake actions for engineMock this time, meaning it will just wrap and unwrap without any handshake

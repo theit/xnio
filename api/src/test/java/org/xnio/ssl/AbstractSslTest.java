@@ -17,17 +17,17 @@
  */
 package org.xnio.ssl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import org.jmock.Mockery;
-import org.jmock.integration.junit4.JUnit4Mockery;
+import org.jmock.junit5.JUnit5Mockery;
 import org.jmock.lib.concurrent.Synchroniser;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.xnio.Buffers;
 import org.xnio.ssl.mock.SSLEngineMock;
 
@@ -46,15 +46,15 @@ public abstract class AbstractSslTest {
     // the SSLEngine mock, allows to test different engine behavior with channel
     protected SSLEngineMock engineMock;
 
-    @Before
+    @BeforeEach
     public void createChannelMock() throws IOException {
-        context = new JUnit4Mockery() {{
+        context = new JUnit5Mockery() {{
             setThreadingPolicy(new Synchroniser());
         }};
         engineMock = new SSLEngineMock(context);
     }
 
-    @After
+    @AfterEach
     public void checkContext() {
         context.assertIsSatisfied();
     }

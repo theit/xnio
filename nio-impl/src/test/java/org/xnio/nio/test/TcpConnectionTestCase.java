@@ -17,21 +17,21 @@
  */
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xnio.ChannelListener;
 import org.xnio.FutureResult;
 import org.xnio.IoFuture;
@@ -57,7 +57,7 @@ public class TcpConnectionTestCase extends AbstractStreamSinkSourceChannelTest<S
     protected StreamConnection serverConnection = null;
     protected AcceptingChannel<? extends StreamConnection> server;
 
-    @Before
+    @BeforeEach
     public void createServer() throws IOException {
         bindAddress = new InetSocketAddress(Inet4Address.getByAddress(new byte[] { 127, 0, 0, 1 }), 12345);
         final ChannelListener<AcceptingChannel<StreamConnection>> acceptingChannelListener = new TestChannelListener<AcceptingChannel<StreamConnection>>();;
@@ -66,7 +66,7 @@ public class TcpConnectionTestCase extends AbstractStreamSinkSourceChannelTest<S
         assertNotNull(server);
     }
 
-    @After
+    @AfterEach
     public void closeServer() throws IOException {
         if (server != null) {
             server.close();
@@ -102,7 +102,7 @@ public class TcpConnectionTestCase extends AbstractStreamSinkSourceChannelTest<S
     }
 
     @Test
-    @Ignore("unreliable")
+    @Disabled("unreliable")
     public void optionSetup() throws IOException {
         initChannels();
         final Option<?>[] unsupportedOptions = OptionHelper.getNotSupportedOptions(Options.CLOSE_ABORT,
@@ -110,9 +110,9 @@ public class TcpConnectionTestCase extends AbstractStreamSinkSourceChannelTest<S
                 Options.RECEIVE_BUFFER, Options.SEND_BUFFER, Options.TCP_NODELAY, Options.TCP_OOB_INLINE,
                 Options.WRITE_TIMEOUT);
         for (Option<?> option: unsupportedOptions) {
-            assertFalse("Channel supports " + option, connection.supportsOption(option));
-            assertNull("Expected null value for option " + option + " but got " + connection.getOption(option) + " instead",
-                    connection.getOption(option));
+            assertFalse(connection.supportsOption(option), "Channel supports " + option);
+            assertNull(connection.getOption(option),
+                    "Expected null value for option " + option + " but got " + connection.getOption(option) + " instead");
         }
 
         assertTrue(connection.supportsOption(Options.CLOSE_ABORT));
@@ -143,7 +143,7 @@ public class TcpConnectionTestCase extends AbstractStreamSinkSourceChannelTest<S
         connection.setOption(Options.TCP_NODELAY, true);
         connection.setOption(Options.TCP_OOB_INLINE, true);
         connection.setOption(Options.WRITE_TIMEOUT, 1301093);
-        assertNull("Unexpected option value: " + connection.getOption(Options.MAX_INBOUND_MESSAGE_SIZE), connection.setOption(Options.MAX_INBOUND_MESSAGE_SIZE, 50000));// unsupported
+        assertNull(connection.setOption(Options.MAX_INBOUND_MESSAGE_SIZE, 50000), "Unexpected option value: " + connection.getOption(Options.MAX_INBOUND_MESSAGE_SIZE));// unsupported
 
         assertTrue(connection.getOption(Options.CLOSE_ABORT));
         assertTrue(connection.getOption(Options.IP_TRAFFIC_CLASS) >= 0);// it is okay that 5 is not returned

@@ -19,7 +19,7 @@
 
 package org.xnio;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteBuffer;
 
@@ -73,8 +73,8 @@ public class AssertReadWrite {
         for (String messageString: message) {
             stringBuffer.append(messageString);
         }
-        assertEquals("expected total size: "+ stringBuffer.length() + " actual length: " + connectedChannelMock.getWrittenText().length(),
-                stringBuffer.toString(), connectedChannelMock.getWrittenText());
+        assertEquals(stringBuffer.toString(), connectedChannelMock.getWrittenText(),
+                "expected total size: "+ stringBuffer.length() + " actual length: " + connectedChannelMock.getWrittenText().length());
     }
 
     /**
@@ -88,7 +88,7 @@ public class AssertReadWrite {
         for (String messageString: message) {
             stringBuffer.append(messageString);
         }
-        assertEquals("expected total size: "+ stringBuffer.length() + " actual length: " + conduitMock.getWrittenText().length(),
-                stringBuffer.toString(), conduitMock.getWrittenText());
+        assertEquals(stringBuffer.toString(), conduitMock.getWrittenText(),
+                "expected total size: "+ stringBuffer.length() + " actual length: " + conduitMock.getWrittenText().length());
     }
 }

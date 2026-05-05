@@ -22,7 +22,7 @@ import java.net.SocketAddress;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.jmock.integration.junit4.JUnit4Mockery;
+import org.jmock.junit5.JUnit5Mockery;
 import org.xnio.MessageConnection;
 import org.xnio.Option;
 import org.xnio.OptionMap;
@@ -54,7 +54,7 @@ public class MessageConnectionMock extends MessageConnection implements Mock {
         this.localAddress = localAddress;
         this.peerAddress = peerAddress;
         this.optionMap = optionMap;
-        final Mockery context = new JUnit4Mockery();
+        final Mockery context = new JUnit5Mockery();
         final MessageSourceConduit sourceConduit = context.mock(MessageSourceConduit.class, "source conduit");
         final MessageSinkConduit sinkConduit = context.mock(MessageSinkConduit.class, "sink conduit");
         context.checking(new Expectations() {{

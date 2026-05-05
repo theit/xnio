@@ -21,19 +21,19 @@
  */
 package org.xnio.nio.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.Buffers;
 import org.xnio.ChannelPipe;
 import org.xnio.Option;
@@ -60,7 +60,7 @@ public class HalfDuplexChannelPipeTestCase extends AbstractStreamSinkSourceChann
         sourceChannelListener.handleEvent(pipeChannel.getLeftSide());
     }
 
-    @Before
+    @BeforeEach
     public void initChannels() throws IOException {
         super.initChannels();
     }
@@ -389,16 +389,16 @@ public class HalfDuplexChannelPipeTestCase extends AbstractStreamSinkSourceChann
         initChannels();
         final Option<?>[] unsupportedOptions = OptionHelper.getNotSupportedOptions(Options.WRITE_TIMEOUT);
         for (Option<?> option: unsupportedOptions) {
-            assertFalse("Channel supports " + option, sinkChannel.supportsOption(option));
-            assertNull("Expected null value for option " + option + " but got " + sinkChannel.getOption(option) +
-                    " instead", sinkChannel.getOption(option));
+            assertFalse(sinkChannel.supportsOption(option), "Channel supports " + option);
+            assertNull(sinkChannel.getOption(option),
+                    "Expected null value for option " + option + " but got " + sinkChannel.getOption(option) + " instead");
         }
 
         assertTrue(sinkChannel.supportsOption(Options.WRITE_TIMEOUT));
 
         sinkChannel.setOption(Options.WRITE_TIMEOUT, 1301093);
-        assertNull("Unexpected option value: " + sinkChannel.getOption(Options.MAX_INBOUND_MESSAGE_SIZE),
-                sinkChannel.setOption(Options.MAX_INBOUND_MESSAGE_SIZE, 50000));// unsupported
+        assertNull(sinkChannel.setOption(Options.MAX_INBOUND_MESSAGE_SIZE, 50000),
+                "Unexpected option value: " + sinkChannel.getOption(Options.MAX_INBOUND_MESSAGE_SIZE));// unsupported
 
         assertEquals(1301093, (int) sinkChannel.getOption(Options.WRITE_TIMEOUT));
         assertNull(sinkChannel.getOption(Options.MAX_INBOUND_MESSAGE_SIZE));// unsupported
@@ -413,16 +413,16 @@ public class HalfDuplexChannelPipeTestCase extends AbstractStreamSinkSourceChann
         initChannels();
         final Option<?>[] unsupportedOptions = OptionHelper.getNotSupportedOptions(Options.READ_TIMEOUT);
         for (Option<?> option: unsupportedOptions) {
-            assertFalse("Channel supports " + option, sourceChannel.supportsOption(option));
-            assertNull("Expected null value for option " + option + " but got " + sourceChannel.getOption(option) +
-                    " instead", sourceChannel.getOption(option));
+            assertFalse(sourceChannel.supportsOption(option), "Channel supports " + option);
+            assertNull(sourceChannel.getOption(option),
+                    "Expected null value for option " + option + " but got " + sourceChannel.getOption(option) + " instead");
         }
 
         assertTrue(sourceChannel.supportsOption(Options.READ_TIMEOUT));
 
         sourceChannel.setOption(Options.READ_TIMEOUT, 293265);
-        assertNull("Unexpected option value: " + sourceChannel.getOption(Options.MAX_INBOUND_MESSAGE_SIZE),
-                sourceChannel.setOption(Options.MAX_OUTBOUND_MESSAGE_SIZE, 50000));// unsupported
+        assertNull(sourceChannel.setOption(Options.MAX_OUTBOUND_MESSAGE_SIZE, 50000),
+                "Unexpected option value: " + sourceChannel.getOption(Options.MAX_INBOUND_MESSAGE_SIZE));// unsupported
 
         assertEquals(293265, (int) sourceChannel.getOption(Options.READ_TIMEOUT));
         assertNull(sourceChannel.getOption(Options.MAX_OUTBOUND_MESSAGE_SIZE));// unsupported

@@ -19,7 +19,13 @@
 
 package org.xnio;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.xnio.AssertReadWrite.assertReadMessage;
 
 import java.io.IOException;
@@ -36,13 +42,7 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Random;
 
-import junit.framework.TestCase;
-
-import org.xnio.BufferAllocator;
-import org.xnio.Buffers;
-import org.xnio.ByteBufferSlicePool;
-import org.xnio.Pool;
-import org.xnio.Pooled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for {@link Buffers}.
@@ -50,7 +50,7 @@ import org.xnio.Pooled;
  * @author <a href="mailto:david.lloyd@redhat.com">David M. Lloyd</a>
  * @author <a href="mailto:flavia.rainone@jboss.com">Flavia Rainone</a>
  */
-public final class BuffersTestCase extends TestCase {
+public final class BuffersTestCase {
 
     private void doTestFlip(Buffer buffer) {
         final int pos = buffer.position();
@@ -62,6 +62,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(cap, buffer.capacity());
     }
 
+    @Test
     public void testFlipByte() {
         ByteBuffer buf = ByteBuffer.allocate(100);
         final byte[] data = {5, 4, 3, 2, 1, 0};
@@ -73,6 +74,7 @@ public final class BuffersTestCase extends TestCase {
         assertFalse(buf.hasRemaining());
     }
 
+    @Test
     public void testFlipChar() {
         CharBuffer buf = CharBuffer.allocate(100);
         final char[] data = {5, 4, 3, 2, 1, 0};
@@ -94,6 +96,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(cap, buffer.capacity());
     }
 
+    @Test
     public void testClearByte() {
         final int sz = 100;
         ByteBuffer buf = ByteBuffer.allocate(sz);
@@ -107,6 +110,7 @@ public final class BuffersTestCase extends TestCase {
         doTestClear(buf);
     }
 
+    @Test
     public void testClearChar() {
         final int sz = 100;
         CharBuffer buf = CharBuffer.allocate(sz);
@@ -126,6 +130,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(50, buffer.limit());
     }
 
+    @Test
     public void testLimitByte() {
         final int sz = 100;
         ByteBuffer buf = ByteBuffer.allocate(sz);
@@ -139,6 +144,7 @@ public final class BuffersTestCase extends TestCase {
         doTestLimit(buf);
     }
 
+    @Test
     public void testLimitChar() {
         final int sz = 100;
         CharBuffer buf = CharBuffer.allocate(sz);
@@ -165,6 +171,7 @@ public final class BuffersTestCase extends TestCase {
         assertTrue(buffer.position() == p);
     }
 
+    @Test
     public void testMarkResetByte() {
         final int sz = 100;
         ByteBuffer buf = ByteBuffer.allocate(sz);
@@ -178,6 +185,7 @@ public final class BuffersTestCase extends TestCase {
         doTestMarkReset(buf);
     }
 
+    @Test
     public void testMarkResetChar() {
         final int sz = 100;
         CharBuffer buf = CharBuffer.allocate(sz);
@@ -200,10 +208,12 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(100, buffer.position());
     }
 
+    @Test
     public void testPositionByte() {
         doTestPosition(ByteBuffer.allocate(200));
     }
 
+    @Test
     public void testPositionChar() {
         doTestPosition(CharBuffer.allocate(200));
     }
@@ -215,14 +225,17 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(0, buffer.position());
     }
 
+    @Test
     public void testRewindByte() {
         doTestRewind(ByteBuffer.allocate(200));
     }
 
+    @Test
     public void testRewindChar() {
         doTestRewind(CharBuffer.allocate(200));
     }
 
+    @Test
     public void tetsFlipClearLimitMarkPositionResetAndRewind() {
         final ByteBuffer buffer = ByteBuffer.allocate(10);
         buffer.position(5);
@@ -256,6 +269,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testPositiveSliceByte() {
         final ByteBuffer buf = ByteBuffer.allocate(200);
         final byte[] data = {5, 10, 15, 20, 0, 5, 10, 15};
@@ -278,6 +292,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(sz * 3, buf.position());
     }
 
+    @Test
     public void testPositiveSliceChar() {
         final CharBuffer buf = CharBuffer.allocate(200);
         final char[] data = {5, 10, 15, 20, 0, 5, 10, 15};
@@ -300,6 +315,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(sz * 3, buf.position());
     }
 
+    @Test
     public void testNegativeSliceByte() {
         final ByteBuffer buf = ByteBuffer.allocate(200);
         final byte[] data = {5, 10, 15, 20, 0, 5, 10, 15};
@@ -322,6 +338,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(sz * 3, buf.position());
     }
 
+    @Test
     public void testNegativeSliceChar() {
         final CharBuffer buf = CharBuffer.allocate(200);
         final char[] data = {5, 10, 15, 20, 0, 5, 10, 15};
@@ -344,6 +361,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(sz * 3, buf.position());
     }
 
+    @Test
     public void testMultipleByeSlices() {
         final ByteBuffer buffer = ByteBuffer.allocate(10);
         buffer.put("abcdefghij".getBytes()).flip();
@@ -415,6 +433,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals('w', buffer.get(8));
     }
 
+    @Test
     public void testMultipleCharSlices() {
         final CharBuffer buffer = CharBuffer.allocate(10);
         buffer.put(new char[] {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'}).flip();
@@ -486,6 +505,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals('n', slice4.get(0));
     }
 
+    @Test
     public void testMultipleShortSlices() {
         final ShortBuffer buffer = ShortBuffer.allocate(10);
         buffer.put(new short[] {1, 2, 3, 4, 5, 6, 7, 8, 9}).flip();
@@ -558,6 +578,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(13, buffer.get(8));
     }
 
+    @Test
     public void testMultipleIntSlices() {
         final IntBuffer buffer = IntBuffer.allocate(15);
         buffer.put(new int[]{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37}).flip();
@@ -618,6 +639,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(47, buffer.get(11));
     }
 
+    @Test
     public void testMultipleLongSlices() {
         final LongBuffer buffer = LongBuffer.allocate(15);
         buffer.put(new long[]{1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121}).flip();
@@ -675,6 +697,7 @@ public final class BuffersTestCase extends TestCase {
         assertReadMessage(buffer, content);
     }
 
+    @Test
     public void testCopyFullBuffer() {
         final ByteBuffer buffer = ByteBuffer.allocate(10);
         buffer.put("1234567890".getBytes()).flip();
@@ -754,6 +777,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals('8', buffer.get(7));
     }
 
+    @Test
     public void testCopyPartialBuffer() {
         final ByteBuffer buffer = ByteBuffer.allocate(10);
         buffer.put("1234567890".getBytes()).flip();
@@ -819,6 +843,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals('7', buffer.get(6));
     }
 
+    @Test
     public void testCopyToSmallerBuffer() {
         final ByteBuffer buffer = ByteBuffer.allocate(10);
         buffer.put("1234567890".getBytes()).flip();
@@ -874,6 +899,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals('7', buffer.get(6));
     }
 
+    @Test
     public void testBufferUnderflowExceptionThrownByCopy() {
         final ByteBuffer buffer = ByteBuffer.allocate(10);
         buffer.put("1234567890".getBytes()).flip();
@@ -909,6 +935,7 @@ public final class BuffersTestCase extends TestCase {
     }
 
     // FIXME XNIO-120
+    @Test
     public void testCopyWithNegativeSliceSize() {
         final ByteBuffer buffer = ByteBuffer.allocate(10);
         buffer.put("1234567890".getBytes()).flip();
@@ -978,6 +1005,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testCopyMultipleBuffers() {
         final ByteBuffer[] buffer = new ByteBuffer[]{ByteBuffer.allocate(2), ByteBuffer.allocate(2),
                 ByteBuffer.allocate(2), ByteBuffer.allocate(2), ByteBuffer.allocate(2)};
@@ -1075,6 +1103,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals('8', buffer[3].get(1));
     }
 
+    @Test
     public void testPartiallyCopyMultipleBuffers() {
         final ByteBuffer[] buffer = new ByteBuffer[] {ByteBuffer.allocate(5), ByteBuffer.allocate(5), ByteBuffer.allocate(5), ByteBuffer.allocate(5)};
         buffer[0].put("09876".getBytes()).flip();
@@ -1136,6 +1165,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals('6', buffer[2].get(0));
     }
 
+    @Test
     public void testCopyMultipleBuffersToSmallerBuffer() {
         final ByteBuffer[] buffer = new ByteBuffer[] {ByteBuffer.allocate(5), ByteBuffer.allocate(5), ByteBuffer.allocate(5), ByteBuffer.allocate(5)};
         buffer[0].put("09876".getBytes()).flip();
@@ -1203,6 +1233,7 @@ public final class BuffersTestCase extends TestCase {
     }
 
     // FIXME XNIO-120
+    @Test
     public void testCopyMultipleBuffersWithNegativeSliceSize() {
         final ByteBuffer[] buffer = new ByteBuffer[] {ByteBuffer.allocate(10), ByteBuffer.allocate(10)};
         buffer[0].put("1234567890".getBytes()).flip();
@@ -1323,6 +1354,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testFillByte() {
         final ByteBuffer buf = ByteBuffer.allocate(100);
         doTestFillByte(buf);
@@ -1355,6 +1387,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testFillChar() {
         final CharBuffer buf1 = CharBuffer.allocate(100);
         doTestFillChar(buf1);
@@ -1387,6 +1420,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testFillShort() {
         final ShortBuffer buf1 = ShortBuffer.allocate(100);
         doTestFillShort(buf1);
@@ -1419,6 +1453,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testFillInt() {
         final IntBuffer buf1 = IntBuffer.allocate(100);
         doTestFillInt(buf1);
@@ -1451,6 +1486,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testFillLong() {
         final LongBuffer buf1 = LongBuffer.allocate(100);
         doTestFillLong(buf1);
@@ -1458,6 +1494,7 @@ public final class BuffersTestCase extends TestCase {
         doTestFillLong(buf2.asLongBuffer());
     }
 
+    @Test
     public void testSkip() {
         ByteBuffer buffer = ByteBuffer.allocate(10);
         buffer.put("abcdefghij".getBytes()).flip();
@@ -1496,6 +1533,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testTrySkip() {
         ByteBuffer buffer = ByteBuffer.allocate(20);
         buffer.put("abcdefghijklmnopqrst".getBytes()).flip();
@@ -1522,6 +1560,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(buffer.limit(), buffer.position());
     }
 
+    @Test
     public void testTrySkipBufferArray() {
         ByteBuffer[] buffers = new ByteBuffer[] {ByteBuffer.allocate(2), ByteBuffer.allocate(3), ByteBuffer.allocate(4),
                 ByteBuffer.allocate(5), ByteBuffer.allocate(1)};
@@ -1590,6 +1629,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(1, buffers[4].position());
     }
 
+    @Test
     public void testUnget() {
         final ByteBuffer buffer = ByteBuffer.allocate(10);
         buffer.put("123456".getBytes());
@@ -1616,6 +1656,7 @@ public final class BuffersTestCase extends TestCase {
         assertReadMessage(buffer, content);
     }
 
+    @Test
     public void testTakeBytes() {
         final ByteBuffer buffer = ByteBuffer.allocate(10);
         buffer.put("1234567890".getBytes()).flip();
@@ -1669,6 +1710,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testTakeChars() {
         final CharBuffer buffer = CharBuffer.allocate(10);
         buffer.put(new char[] {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'}).flip();
@@ -1729,6 +1771,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testTakeShorts() {
         final ShortBuffer buffer = ShortBuffer.allocate(10);
         buffer.put(new short[] {1, 2, 3, 5, 7, 11, 13, 17, 19}).flip();
@@ -1788,6 +1831,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testTakeInts() {
         final IntBuffer buffer = IntBuffer.allocate(10);
         buffer.put(new int[] {2, 4, 6, 8, 10, 12, 14, 16, 18, 20}).flip();
@@ -1848,6 +1892,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testTakeLongs() {
         final LongBuffer buffer = LongBuffer.allocate(10);
         buffer.put(new long[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}).flip();
@@ -1908,6 +1953,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testDumpByteBuffer() throws IOException {
         final ByteBuffer buffer = ByteBuffer.allocate(15);
         buffer.put("create dumper".getBytes()).flip();
@@ -1970,6 +2016,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testDumpCharBuffers() throws IOException {
         final CharBuffer buffer = CharBuffer.allocate(15);
         buffer.put(new char[] {'d', 'u', 'm', 'p', ' ', 'c', 'h', 'a', 'r', 's'}).flip();
@@ -2032,6 +2079,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testEmptyPooledByteBuffer() {
         assertEquals(0, Buffers.EMPTY_POOLED_BYTE_BUFFER.getResource().capacity());
         Buffers.EMPTY_POOLED_BYTE_BUFFER.discard();
@@ -2041,6 +2089,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(Buffers.EMPTY_POOLED_BYTE_BUFFER.toString());
     }
 
+    @Test
     public void testRemaining() {
         assertFalse(Buffers.hasRemaining(new Buffer[0]));
         assertEquals(0, Buffers.remaining(new Buffer[0]));
@@ -2069,6 +2118,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(6, Buffers.remaining(buffers, 1, 4));
     }
 
+    @Test
     public void testPutModifiedUtf8() {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('a');
@@ -2147,6 +2197,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals('?', modifiedUtf8[9]);
     }
 
+    @Test
     public void testGetMotifiedUtf8Z() {
         final ByteBuffer buffer = ByteBuffer.allocate(20);
         fillBufferModifiedUtf8Test(buffer);
@@ -2156,6 +2207,7 @@ public final class BuffersTestCase extends TestCase {
         assertModifiedUtf8Result(resultChars);
     }
 
+    @Test
     public void testGetMotifiedUtf8() {
         final ByteBuffer buffer = ByteBuffer.allocate(20);
         fillBufferModifiedUtf8Test(buffer);
@@ -2167,6 +2219,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals('z', resultChars[11]);
     }
 
+    @Test
     public void testReadAsciiZ() {
         final ByteBuffer buffer = ByteBuffer.allocate(20);
         buffer.put((byte) 'a');
@@ -2200,6 +2253,7 @@ public final class BuffersTestCase extends TestCase {
         assertFalse(Buffers.readAsciiZ(buffer, builder));
     }
 
+    @Test
     public void testReadAsciiZWithReplacement() {
         final ByteBuffer buffer = ByteBuffer.allocate(20);
         buffer.put((byte) 'D');
@@ -2233,6 +2287,7 @@ public final class BuffersTestCase extends TestCase {
         assertFalse(Buffers.readAsciiZ(buffer, builder, '0'));
     }
 
+    @Test
     public void testReadAsciiLine() {
         final ByteBuffer buffer = ByteBuffer.allocate(30);
         buffer.put((byte) 'R');
@@ -2304,6 +2359,7 @@ public final class BuffersTestCase extends TestCase {
         assertTrue(builder.toString().isEmpty());
     }
 
+    @Test
     public void testReadAscii() {
         final ByteBuffer buffer = ByteBuffer.allocate(30);
         buffer.put("read".getBytes());
@@ -2321,6 +2377,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals("read?this?until?the?end!!!", builder.toString());
     }
 
+    @Test
     public void testReadAsciiWithReplacement() {
         final ByteBuffer buffer = ByteBuffer.allocate(30);
         buffer.put("read".getBytes());
@@ -2338,6 +2395,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals("read@this@until@the@end!!!", builder.toString());
     }
 
+    @Test
     public void testReadAsciiWithLimit() {
         final ByteBuffer buffer = ByteBuffer.allocate(30);
         buffer.put("read".getBytes());
@@ -2361,6 +2419,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals("read(this(with)some)limit!!!", builder.toString());
     }
 
+    @Test
     public void testReadLatin1Z() {
         final ByteBuffer buffer = ByteBuffer.allocate(15);
         buffer.put((byte) 0xaaa);
@@ -2411,6 +2470,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(0x23, chars[10]);
     }
 
+    @Test
     public void testReadLatin1Line() {
         final ByteBuffer buffer = ByteBuffer.allocate(15);
         buffer.put((byte) 0xaaa);
@@ -2470,6 +2530,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(0x22, chars[0]);
     }
 
+    @Test
     public void testReadLatin1LineWithDelimeter() {
         final ByteBuffer buffer = ByteBuffer.allocate(15);
         buffer.put((byte) 0xaaa);
@@ -2529,6 +2590,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(0x22, chars[0]);
     }
 
+    @Test
     public void testReadLatin1() {
         final ByteBuffer buffer = ByteBuffer.allocate(15);
         buffer.put((byte) 0xa59);
@@ -2560,6 +2622,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals(0x50, chars[10]);
     }
 
+    @Test
     public void testReadModifiedUtf8Z() {
         final ByteBuffer buffer = ByteBuffer.allocate(30);
         buffer.put((byte) 0xa00); // '\0'
@@ -2646,6 +2709,7 @@ public final class BuffersTestCase extends TestCase {
         assertTrue(builder.toString().isEmpty());
     }
 
+    @Test
     public void testReadModifiedUtf8ZWithReplacement() {
         final ByteBuffer buffer = ByteBuffer.allocate(30);
         buffer.put((byte) 0xa00); // '\0'
@@ -2732,6 +2796,7 @@ public final class BuffersTestCase extends TestCase {
         assertTrue(builder.toString().isEmpty());
     }
 
+    @Test
     public void testReadModifiedUtf8Line() {
         final ByteBuffer buffer = ByteBuffer.allocate(40);
         buffer.put((byte) '\n');
@@ -2897,6 +2962,7 @@ public final class BuffersTestCase extends TestCase {
         assertTrue(builder.toString().isEmpty());
     }
 
+    @Test
     public void testReadModifiedUtf8LineWithReplacement() {
         final ByteBuffer buffer = ByteBuffer.allocate(40);
         buffer.put((byte) '\n');
@@ -3062,6 +3128,7 @@ public final class BuffersTestCase extends TestCase {
         assertTrue(builder.toString().isEmpty());
     }
 
+    @Test
     public void testReadModifiedUtf8LineWithReplacementAndDelimiter() {
         final ByteBuffer buffer = ByteBuffer.allocate(40);
         buffer.put((byte) '!');
@@ -3227,6 +3294,7 @@ public final class BuffersTestCase extends TestCase {
         assertTrue(builder.toString().isEmpty());
     }
 
+    @Test
     public void testReadLine() {
         final ByteBuffer buffer = ByteBuffer.allocate(15);
         buffer.put((byte) 'a');
@@ -3299,6 +3367,7 @@ public final class BuffersTestCase extends TestCase {
         assertTrue(builder.toString().isEmpty());
     }
 
+    @Test
     public void testReadLineWithDelimiter() {
         final ByteBuffer buffer = ByteBuffer.allocate(15);
         buffer.put((byte) 'a');
@@ -3419,6 +3488,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(pooledBuffer2.toString());
     }
 
+    @Test
     public void testPooledWrapper() {
         final ByteBuffer buffer = ByteBuffer.allocate(10);
         final Pooled<ByteBuffer> pooledBuffer1 = Buffers.pooledWrapper(buffer);
@@ -3438,6 +3508,7 @@ public final class BuffersTestCase extends TestCase {
         assertBufferContent(buffer, content);
     }
 
+    @Test
     public void testSliceAllocator() {
         final ByteBuffer buffer = ByteBuffer.allocate(30);
         buffer.put("abcdefghijklmnopqrstuvwxyz1234".getBytes()).flip();
@@ -3472,6 +3543,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals('0', slice3.get(1));
     }
 
+    @Test
     public void testSliceAllocatorWithAllocatedBufferPool() {
         final ByteBuffer buffer = ByteBuffer.allocate(12);
         buffer.put("abcdefghijkl".getBytes()).flip();
@@ -3499,6 +3571,7 @@ public final class BuffersTestCase extends TestCase {
         assertEquals('8', slice2.get(1));
     }
 
+    @Test
     public void testSecureBufferPool() {
         final ByteBufferSlicePool pool = new ByteBufferSlicePool(BufferAllocator.BYTE_BUFFER_ALLOCATOR, 17000, 17000 * 16);
         final Pool<ByteBuffer> securePool = Buffers.secureBufferPool(pool);
@@ -3513,6 +3586,7 @@ public final class BuffersTestCase extends TestCase {
         assertPooledBuffers(pooledBuffer1, pooledBuffer2);
     }
 
+    @Test
     public void testZeroByteBuffer() {
         final ByteBuffer buffer1 = ByteBuffer.allocate(23);
         final ByteBuffer buffer2 = ByteBuffer.allocate(24);
@@ -3535,6 +3609,7 @@ public final class BuffersTestCase extends TestCase {
         }
     }
 
+    @Test
     public void testZeroCharBuffer() {
         final CharBuffer buffer1 = CharBuffer.allocate(95);
         final CharBuffer buffer2 = CharBuffer.allocate(96);
@@ -3557,6 +3632,7 @@ public final class BuffersTestCase extends TestCase {
         }
     }
 
+    @Test
     public void testIsDirect() {
         final ByteBuffer buffer1 = ByteBuffer.allocate(5);
         final ByteBuffer buffer2 = ByteBuffer.allocateDirect(10);
@@ -3608,6 +3684,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testAssertWritable() {
         final ByteBuffer buffer = ByteBuffer.allocate(10);
         final ByteBuffer readOnlyBuffer = buffer.asReadOnlyBuffer();
@@ -3651,6 +3728,7 @@ public final class BuffersTestCase extends TestCase {
         assertNotNull(expected);
     }
 
+    @Test
     public void testAddRandom() {
         final ByteBuffer buffer = ByteBuffer.allocate(20);
         final Random random = new Random();

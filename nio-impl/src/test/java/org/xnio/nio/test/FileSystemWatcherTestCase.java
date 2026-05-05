@@ -18,10 +18,10 @@
  */
 package org.xnio.nio.test;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xnio.FileChangeCallback;
 import org.xnio.FileChangeEvent;
 import org.xnio.FileSystemWatcher;
@@ -74,7 +74,7 @@ public class FileSystemWatcherTestCase {
         return Xnio.getInstance("nio", FileSystemWatcherTestCase.class.getClassLoader());
     }
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
 
         rootDir = new File(System.getProperty("java.io.tmpdir") + DIR_NAME);
@@ -99,7 +99,7 @@ public class FileSystemWatcherTestCase {
         }
     }
 
-    @After
+    @AfterEach
     public void after() {
         deleteRecursive(rootDir);
     }
@@ -190,8 +190,8 @@ public class FileSystemWatcherTestCase {
             // check the files created are all received
             for (int i = 0; i < NUM_THREADS; i++) {
                 for (int j = 0; j < NUM_FILES; j++) {
-                    Assert.assertTrue("Add for file [" + i + "," + j + "] was not received",
-                            files.contains("thread-" + i + "-" + j));
+                    Assertions.assertTrue(files.contains("thread-" + i + "-" + j),
+                            "Add for file [" + i + "," + j + "] was not received");
                 }
             }
         }
@@ -199,8 +199,8 @@ public class FileSystemWatcherTestCase {
     }
 
     private void checkResult(File file, FileChangeEvent.Type type) throws InterruptedException {
-        Assert.assertTrue("File " + file + " operation " + type + " not received in results", checkResult(file, type, results));
-        Assert.assertTrue("File " + file + " operation " + type + " not received in secondResults", checkResult(file, type, secondResults));
+        Assertions.assertTrue(checkResult(file, type, results), "File " + file + " operation " + type + " not received in results");
+        Assertions.assertTrue(checkResult(file, type, secondResults), "File " + file + " operation " + type + " not received in secondResults");
     }
 
     private static boolean checkResult(File file, FileChangeEvent.Type type, BlockingDeque<Collection<FileChangeEvent>> deque) throws InterruptedException {
@@ -255,7 +255,7 @@ public class FileSystemWatcherTestCase {
                         TimeUnit.MILLISECONDS.sleep(timeout);
                     }
                 } catch (IOException | InterruptedException e) {
-                    Assert.fail("Thread " + number + " failed " + e.getMessage());
+                    Assertions.fail("Thread " + number + " failed " + e.getMessage());
                 }
             }
         }

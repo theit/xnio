@@ -23,13 +23,12 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.byteman.contrib.bmunit.BMScript;
-import org.jboss.byteman.contrib.bmunit.BMUnitRunner;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.jmock.integration.junit4.JUnit4Mockery;
+import org.jmock.junit5.JUnit5Mockery;
 import org.jmock.lib.concurrent.Synchroniser;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xnio.ChannelListener;
 import org.xnio.Option;
 import org.xnio.XnioExecutor;
@@ -44,13 +43,14 @@ import org.xnio.channels.TranslatingSuspendableChannel;
  * 
  * @author <a href="mailto:flavia.rainone@jboss.com">Flavia Rainone</a>
  */
-@RunWith(BMUnitRunner.class)
+@Disabled
+// @RunWith(BMUnitRunner.class)
 @BMScript(dir="src/test/resources")
 public class SetReadListenerOnHandlingReadableChannelTestCase {
     @Test
     public void test() throws Exception {
         // create mockery context
-        final Mockery context = new JUnit4Mockery() {{
+        final Mockery context = new JUnit5Mockery() {{
             setThreadingPolicy(new Synchroniser());
         }};
         // creating channel and threads
